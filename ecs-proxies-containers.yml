@@ -1,0 +1,4 @@
+docker_containers:
+  - name: canary-api
+    dockerfile: "docker/Dockerfile"
+    path: "docker"
