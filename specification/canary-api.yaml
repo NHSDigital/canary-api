@@ -1,117 +1,129 @@
+# This is an OpenAPI Specification (https://swagger.io/specification/)
+# for the Hello World API
+# owned by NHS Digital (https://digital.nhs.uk/)
 openapi: "3.0.0"
-x-nhsd-api-platform:
-  meta:
-    service_name: canary-api
-    short_service_name: canary
-    service_base_path: canary-api
-    product_display_name: Canary API
-    product_description: The Canary API is used for testing internal processes for API Management releases
-    pipeline_name_prefix: Canary-API
+
 info:
-  version: 1.0.0
-  title: Canary API
-  license:
-    name: MIT
+  version: "0.0.1"
+  title: Canaray-API
+  description: |
+    ## Overview 
+    This is a copy of the Hello World API spec simply for testing releases to production.
+    
+  contact:
+    name: API Management Support
+    email: api.management@nhs.net
+
+servers:
+  - url: 'https://sandbox.api.service.nhs.uk/hello-world'
+    description: Sandbox environment.
+
 paths:
-  /pets:
+
+  /hello/world:
     get:
-      summary: List all pets
-      operationId: listPets
+      summary: Open-access endpoint
+      operationId: getHello
+      description: |
+        Get a "Hello world!" response from an open-access endpoint.
+        Use this endpoint alongside our [open-access REST API tutorial](https://digital.nhs.uk/developer/guides-and-documentation/tutorials/open-access-rest-api-tutorial) to learn how to connect to our APIs.
+      responses:
+        '200':                                                      
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Hello world!"
+              example:
+                message: "Hello world!"
       tags:
-        - pets
-      parameters:
-        - name: limit
-          in: query
-          description: How many items to return at one time (max 100)
-          required: false
-          schema:
-            type: integer
-            format: int32
+        - hello
+
+  /hello/application:
+    get:
+      summary: Application-restricted endpoint
+      operationId: getHelloApiKey
+      description: |
+        Get a "Hello application!" response from an application-restricted endpoint.
+        Use this endpoint alongside our [application-restricted REST API tutorial](https://digital.nhs.uk/developer/guides-and-documentation/tutorials/application-restricted-rest-api-tutorial) to learn how to connect to our APIs.
       responses:
         '200':
-          description: A paged array of pets
-          headers:
-            x-next:
-              description: A link to the next page of responses
-              schema:
-                type: string
-          content:
-            application/json:   
-              schema:
-                $ref: "#/components/schemas/Pets"
-        default:
-          description: unexpected error
+          description: Successful response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Error"
-    post:
-      summary: Create a pet
-      operationId: createPets
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Hello application!"
+              example:
+                message: "Hello application!"
+        '401':
+          description: Missing or invalid API Key
+          content: 
+            application/json:
+              example:
+                message: "Invalid ApiKey"
+      security:
+        - api_key: []
       tags:
-        - pets
-      responses:
-        '201':
-          description: Null response
-        default:
-          description: unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-  /pets/{petId}:
+        - hello
+
+  /hello/user:
     get:
-      summary: Info for a specific pet
-      operationId: showPetById
-      tags:
-        - pets
-      parameters:
-        - name: petId
-          in: path
-          required: true
-          description: The id of the pet to retrieve
-          schema:
-            type: string
+      summary: User-restricted endpoint
+      operationId: getHelloToken
+      description: |
+        Get a "Hello user!" response from a user-restricted endpoint.
+        Use this endpoint alongside our [user-restricted REST API tutorial](https://digital.nhs.uk/developer/guides-and-documentation/tutorials/user-restricted-rest-api-tutorial) to learn how to connect to our APIs.
       responses:
         '200':
-          description: Expected response to a valid request
+          description: Successful response
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Pet"
-        default:
-          description: unexpected error
-          content:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Hello user!"
+              example:
+                message: "Hello user!"
+        '401':
+          description: Missing or invalid OAuth 2.0 Access Token
+          content: 
             application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+              example:
+                message: "Invalid access token"
+      security:
+        - oAuth2AuthCode: []
+      tags:
+        - hello
+
 components:
+
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: apikey
+      in: header
+
+    oAuth2AuthCode:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sandbox.api.service.nhs.uk/oauth2/authorize
+          tokenUrl: https://sandbox.api.service.nhs.uk/oauth2/token
+          scopes: {}
+
   schemas:
-    Pet:
-      type: object
-      required:
-        - id
-        - name
-      properties:
-        id:
-          type: integer
-          format: int64
-        name:
-          type: string
-        tag:
-          type: string
-    Pets:
-      type: array
-      items:
-        $ref: "#/components/schemas/Pet"
-    Error:
-      type: object
-      required:
-        - code
-        - message
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
+    Greeting:
+      $ref: components/schemas/Greeting.yaml
+
+tags:
+  - name: hello
