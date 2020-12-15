@@ -33,6 +33,8 @@ extends:
     service_base_path: ${{ variables.service_base_path }}
     product_display_name: ${{ variables.product_display_name }}
     product_description: ${{ variables.product_description }}
-    ping: false
+    spec_file: ${{ variables.spec_file }}
     apigee_deployments:
-      - environment: internal-dev
+        - environment: internal-dev          
+        - environment: internal-dev-sandbox
+          proxy_path: sandbox
