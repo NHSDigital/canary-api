@@ -1,2 +1,5 @@
 node_modules
 poetry.lock
+build/
+dist/
+scripts/__pycache__/
