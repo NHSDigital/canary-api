@@ -33,6 +33,7 @@ extends:
     product_display_name: ${{ variables.product_display_name }}
     product_description: ${{ variables.product_description }}
     spec_file: ${{ variables.spec_file }}
+    prod_requires_approval: true
     apigee_deployments:
       - environment: internal-dev
       - environment: internal-qa
@@ -47,6 +48,6 @@ extends:
           - internal_qa
           - internal_qa_sandbox
       - environment: prod
-        depends_on:
-          - internal_qa
-          - internal_qa_sandbox
+        # depends_on:
+        #   - internal_qa
+        #   - internal_qa_sandbox
