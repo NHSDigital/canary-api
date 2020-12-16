@@ -15,7 +15,7 @@ info:
     email: api.management@nhs.net
 
 servers:
-  - url: 'https://sandbox.api.service.nhs.uk/hello-world'
+  - url: 'https://sandbox.api.service.nhs.uk/canary-api'
     description: Sandbox environment.
 
 paths:

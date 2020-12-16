@@ -19,6 +19,26 @@
         </Response>
         <Condition>(proxy.pathsuffix MatchesPath "/_ping") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
       </Flow>
+      <Flow name="Flow.Hello">
+        <Description/>
+        <Request>
+            <Step>
+                <Name>OAuthV2.VerifyAccessToken</Name>
+            </Step>
+        </Request>
+        <Response/>
+        <Condition>(proxy.pathsuffix MatchesPath "/") and (request.verb = "GET")</Condition>
+      </Flow>
+      <Flow name="Flow.Health">
+        <Description/>
+        <Request>
+            <Step>
+                <Name>OAuthV2.VerifyAccessToken</Name>
+            </Step>
+        </Request>
+        <Response/>
+        <Condition>(proxy.pathsuffix MatchesPath "/_health") and (request.verb = "GET")</Condition>
+      </Flow>
     </Flows>
     <PreFlow/>
     <HTTPProxyConnection>
