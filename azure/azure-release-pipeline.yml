@@ -38,9 +38,11 @@ extends:
       - environment: internal-dev
       - environment: internal-qa
       - environment: internal-qa-sandbox
-      - environment: sandbox
+      - environment: manual-approval
+        stage_name: manual_approval_int
       - environment: int
         depends_on:
+          - manual_approval_int
           - internal_qa
           - internal_qa_sandbox
       - environment: ref
@@ -48,6 +50,6 @@ extends:
           - internal_qa
           - internal_qa_sandbox
       - environment: prod
-        # depends_on:
-        #   - internal_qa
-        #   - internal_qa_sandbox
+        depends_on:
+          - internal_qa
+          - internal_qa_sandbox
