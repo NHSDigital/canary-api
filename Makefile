@@ -1,8 +1,16 @@
 SHELL=/bin/bash -euo pipefail
 
-install:
+install: install-node install-python install-hooks
+
+install-python:
 	poetry install
-	cd docker && npm install
+
+install-node:
+	npm install
+	cd sandbox && npm install
+
+install-hooks:
+	cp scripts/pre-commit .git/hooks/pre-commit
 
 test:
 	@echo "No tests configured."
@@ -26,3 +34,6 @@ lint:
 publish: clean
 	mkdir -p build
 	npm run publish
+
+build-proxy:
+	scripts/build_proxy.sh
