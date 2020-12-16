@@ -61,9 +61,9 @@ jobs:
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
-      - name: Create release (master only)
+      - name: Create release (main only)
         id: create-release
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main'
         uses: actions/create-release@v1
         continue-on-error: true
         env:
