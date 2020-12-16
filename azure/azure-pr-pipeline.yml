@@ -37,5 +37,9 @@ extends:
     spec_file: ${{ variables.spec_file }}
     deploy_review_sandbox: true
     apigee_deployments:
-        - environment: internal-dev          
+        - environment: internal-dev
+        - environment: manual-approval
+          stage_name: manual_approval_internal_dev_sandbox
         - environment: internal-dev-sandbox
+          depends_on:
+            - manual_approval_internal_dev_sandbox

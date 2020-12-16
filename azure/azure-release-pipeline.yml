@@ -9,7 +9,6 @@ resources:
       type: github
       name: NHSDigital/api-management-utils
       endpoint: NHSDigital
-      ref: refs/heads/apm-1645-manual-approval-gate
   pipelines:
   - pipeline: build_pipeline
     source: "Canary-API-Build"
@@ -33,16 +32,12 @@ extends:
     product_display_name: ${{ variables.product_display_name }}
     product_description: ${{ variables.product_description }}
     spec_file: ${{ variables.spec_file }}
-    prod_requires_approval: true
     apigee_deployments:
       - environment: internal-dev
       - environment: internal-qa
       - environment: internal-qa-sandbox
-      - environment: manual-approval
-        stage_name: manual_approval_int
       - environment: int
         depends_on:
-          - manual_approval_int
           - internal_qa
           - internal_qa_sandbox
       - environment: ref
