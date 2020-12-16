@@ -15,8 +15,8 @@ resources:
     trigger:
       branches:
         exclude:
-          - master
-          - refs/heads/master
+          - main
+          - refs/heads/main
           - refs/tags/v*
 
 pool:
@@ -35,3 +35,6 @@ extends:
     product_description: ${{ variables.product_description }}
     spec_file: ${{ variables.spec_file }}
     deploy_review_sandbox: true
+    apigee_deployments:
+        - environment: internal-dev          
+        - environment: internal-dev-sandbox

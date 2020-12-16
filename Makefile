@@ -12,37 +12,28 @@ install-node:
 install-hooks:
 	cp scripts/pre-commit .git/hooks/pre-commit
 
-lint:
-	npm run lint
-	poetry run flake8 **/*.py
+test:
+	@echo "No tests configured."
 
 clean:
-	rm -rf build
 	rm -rf dist
+
+release: clean publish
+	mkdir -p dist
+	cp build/canary-api.json dist
+	mkdir -p dist/proxies/live
+	cp -Rv proxies/live/apiproxy dist/proxies/live
+	cp ecs-proxies-deploy.yml dist/ecs-deploy-internal-dev.yml
+
+check-licenses:
+	@echo "Not configured"
+
+lint:
+	@echo "Not configured"
 
 publish: clean
 	mkdir -p build
-	npm run publish 2> /dev/null
-
-serve:
-	npm run serve
-
-check-licenses:
-	npm run check-licenses
-	scripts/check_python_licenses.sh
-
-format:
-	poetry run black **/*.py
-
-sandbox: update-examples
-	cd sandbox && npm run start
+	npm run publish
 
 build-proxy:
 	scripts/build_proxy.sh
-
-release: clean publish build-proxy
-	mkdir -p dist
-	cp -r build/. dist
-
-test:
-	echo "TODO: add tests"

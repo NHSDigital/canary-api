@@ -1,4 +1,4 @@
 <APIProxy name="canary">
   <!-- This is the root of the application -->
-  <Description>Proxy to a target service.</Description>
+  <Description>Proxy to Canary API endpoints.</Description>
 </APIProxy>
