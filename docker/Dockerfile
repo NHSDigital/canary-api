@@ -1,9 +1,11 @@
 FROM node:13
 
-WORKDIR /usr/src/app
+WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
 COPY . .
+RUN chmod -R a+x /app
 
-CMD [ "npm", "start" ]
+EXPOSE 9000
+CMD ["npm", "start"]
