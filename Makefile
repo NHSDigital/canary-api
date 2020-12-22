@@ -24,6 +24,7 @@ release: clean publish
 	mkdir -p dist/proxies/live
 	cp -Rv proxies/live/apiproxy dist/proxies/live
 	cp ecs-proxies-deploy.yml dist/ecs-deploy-internal-dev.yml
+	cp ecs-proxies-deploy-sandbox.yml dist/ecs-deploy-internal-dev-sandbox.yml
 
 check-licenses:
 	@echo "Not configured"
