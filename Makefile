@@ -7,7 +7,6 @@ install-python:
 
 install-node:
 	npm install
-	cd sandbox && npm install
 
 install-hooks:
 	cp scripts/pre-commit .git/hooks/pre-commit
@@ -21,10 +20,14 @@ clean:
 release: clean publish
 	mkdir -p dist
 	cp build/canary-api.json dist
+	cp -R e2e/. dist/e2e
 	mkdir -p dist/proxies/live
 	cp -Rv proxies/live/apiproxy dist/proxies/live
-	cp ecs-proxies-deploy.yml dist/ecs-deploy-internal-dev.yml
-	cp ecs-proxies-deploy-sandbox.yml dist/ecs-deploy-internal-dev-sandbox.yml
+
+	# can replace with `cp ecs-proxies-deploy.yml dist/ecs-deploy-all.yml` when prod is available
+	for env in internal-dev internal-dev-sandbox internal-qa internal-qa-sandbox ref sandbox int; do \
+   		cp ecs-proxies-deploy.yml dist/ecs-deploy-$$env.yml; \
+	done
 
 check-licenses:
 	@echo "Not configured"
@@ -37,4 +40,6 @@ publish: clean
 	npm run publish
 
 build-proxy:
-	scripts/build_proxy.sh
+	rm -rf build/proxies;
+	mkdir -p build/proxies/live;
+	cp -Rv proxies/live/apiproxy build/proxies/live

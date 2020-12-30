@@ -37,5 +37,13 @@ extends:
     spec_file: ${{ variables.spec_file }}
     deploy_review_sandbox: true
     apigee_deployments:
-        - environment: internal-dev          
+        - environment: internal-dev
+          post_deploy:
+            - template: templates/tests.yml
+              parameters:
+                service_name: ${{ variables.service_name }}
         - environment: internal-dev-sandbox
+          post_deploy:
+            - template: templates/tests.yml
+              parameters:
+                service_name: ${{ variables.service_name }}

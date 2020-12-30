@@ -2,6 +2,3 @@ docker_containers:
   - name: canary-api
     dockerfile: "docker/Dockerfile"
     path: "docker"
-  - name: canary-sandbox
-    dockerfile: "sandbox/Dockerfile"
-    path: "sandbox"
