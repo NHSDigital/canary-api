@@ -3,4 +3,5 @@ poetry.lock
 build/
 dist/
 scripts/__pycache__/
-.idea
+.idea/
+.venv/
