@@ -21,10 +21,12 @@ clean:
 release: clean publish
 	mkdir -p dist
 	cp build/canary-api.json dist
-	mkdir -p dist/proxies/live
+	cp -R e2e/. dist/e2e
 	cp -Rv proxies/live/apiproxy dist/proxies/live
-	cp ecs-proxies-deploy.yml dist/ecs-deploy-internal-dev.yml
-	cp ecs-proxies-deploy-sandbox.yml dist/ecs-deploy-internal-dev-sandbox.yml
+	mkdir -p dist/proxies/live
+	for env in internal-dev internal-dev-sandbox internal-qa internal-qa-sandbo ref sandbox int; do  # prod too when ecs can be deployed there
+		cp ecs-proxies-deploy.yml dist/ecs-deploy-${env}.yml
+	done;
 
 check-licenses:
 	@echo "Not configured"

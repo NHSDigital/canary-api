@@ -35,18 +35,53 @@ extends:
     spec_file: ${{ variables.spec_file }}
     apigee_deployments:
       - environment: internal-dev
+        post_deploy:
+          - template: templates/tests.yml
+            parameters:
+              service_name: ${{ variables.service_name }}
+      - environment: internal-dev-sandbox
+        post_deploy:
+          - template: templates/tests.yml
+            parameters:
+              service_name: ${{ variables.service_name }}
       - environment: internal-qa
+        post_deploy:
+          - template: templates/tests.yml
+            parameters:
+              service_name: ${{ variables.service_name }}
       - environment: internal-qa-sandbox
+        post_deploy:
+          - template: templates/tests.yml
+            parameters:
+              service_name: ${{ variables.service_name }}
       - environment: sandbox
+        post_deploy:
+          - template: templates/tests.yml
+            parameters:
+              service_name: ${{ variables.service_name }}
+        depends_on:
+          - internal_qa_sandbox
       - environment: int
+        post_deploy:
+          - template: templates/tests.yml
+            parameters:
+              service_name: ${{ variables.service_name }}
         depends_on:
           - internal_qa
           - internal_qa_sandbox
       - environment: ref
+        post_deploy:
+          - template: templates/tests.yml
+            parameters:
+              service_name: ${{ variables.service_name }}
         depends_on:
           - internal_qa
           - internal_qa_sandbox
       - environment: prod
+#         post_deploy:
+#           - template: templates/tests.yml
+#             parameters:
+#               service_name: ${{ variables.service_name }}
         depends_on:
-          - internal_qa
-          - internal_qa_sandbox
+          - int
+          - ref
