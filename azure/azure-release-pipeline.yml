@@ -36,50 +36,50 @@ extends:
     apigee_deployments:
       - environment: internal-dev
         post_deploy:
-          - template: templates/tests.yml
+          - template: templates/e2e.yml
             parameters:
-              service_name: ${{ variables.service_name }}
+              test_type: smoketest
       - environment: internal-dev-sandbox
         post_deploy:
-          - template: templates/tests.yml
+          - template: templates/e2e.yml
             parameters:
-              service_name: ${{ variables.service_name }}
+              test_type: smoketest
       - environment: internal-qa
         post_deploy:
-          - template: templates/tests.yml
+          - template: templates/e2e.yml
             parameters:
-              service_name: ${{ variables.service_name }}
+              test_type: smoketest
       - environment: internal-qa-sandbox
         post_deploy:
-          - template: templates/tests.yml
+          - template: templates/e2e.yml
             parameters:
-              service_name: ${{ variables.service_name }}
+              test_type: smoketest
       - environment: sandbox
         post_deploy:
-          - template: templates/tests.yml
+          - template: templates/e2e.yml
             parameters:
-              service_name: ${{ variables.service_name }}
+              test_type: smoketest
         depends_on:
           - internal_qa_sandbox
       - environment: int
         post_deploy:
-          - template: templates/tests.yml
+          - template: templates/e2e.yml
             parameters:
-              service_name: ${{ variables.service_name }}
+              test_type: smoketest
         depends_on:
           - internal_qa
           - internal_qa_sandbox
       - environment: ref
         post_deploy:
-          - template: templates/tests.yml
+          - template: templates/e2e.yml
             parameters:
-              service_name: ${{ variables.service_name }}
+              test_type: smoketest
         depends_on:
           - internal_qa
           - internal_qa_sandbox
       - environment: prod
 #         post_deploy:
-#           - template: templates/tests.yml
+#           - template: templates/e2e.yml
 #             parameters:
 #               service_name: ${{ variables.service_name }}
         depends_on:

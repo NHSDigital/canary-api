@@ -20,7 +20,7 @@ clean:
 release: clean publish
 	mkdir -p dist
 	cp build/canary-api.json dist
-	cp -R e2e/. dist/e2e
+	cp -R e2e dist
 	mkdir -p dist/proxies/live
 	cp -Rv proxies/live/apiproxy dist/proxies/live
 
