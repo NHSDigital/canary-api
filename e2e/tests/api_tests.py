@@ -19,7 +19,7 @@ async def test_wait_for_ping(api_client: APISessionClient, api_test_config: APIT
     await poll_until(
         make_request=lambda: api_client.get('_ping'),
         until=_is_complete,
-        timeout=60
+        timeout=120
     )
 
 
@@ -41,7 +41,7 @@ async def test_wait_for_status(api_client: APISessionClient, api_test_config: AP
     await poll_until(
         make_request=lambda: api_client.get('_status'),
         until=_is_complete,
-        timeout=60
+        timeout=120
     )
 
 
@@ -50,7 +50,7 @@ async def test_wait_for_status(api_client: APISessionClient, api_test_config: AP
 async def test_api_status_with_service_header_another_service(api_client: APISessionClient):
 
     async with api_client.get("_status", headers={'x-apim-service': 'another-service'}) as r:
-        assert r.status == 200
+        assert r.status == 200, (r.status, r.reason, (await r.text())[:2000])
         body = await r.json()
 
         assert body.get('service') == 'canary'
@@ -61,7 +61,7 @@ async def test_api_status_with_service_header_another_service(api_client: APISes
 async def test_api_status_with_service_header(api_client: APISessionClient):
 
     async with api_client.get("_status", headers={'x-apim-service': 'canary'}) as r:
-        assert r.status == 200
+        assert r.status == 200, (r.status, r.reason, (await r.text())[:2000])
         body = await r.json()
 
         assert body.get('service') == 'canary'
