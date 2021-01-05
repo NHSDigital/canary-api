@@ -23,11 +23,7 @@ release: clean publish
 	cp -R e2e dist
 	mkdir -p dist/proxies/live
 	cp -Rv proxies/live/apiproxy dist/proxies/live
-
-	# can replace with `cp ecs-proxies-deploy.yml dist/ecs-deploy-all.yml` when prod is available
-	for env in internal-dev internal-dev-sandbox internal-qa internal-qa-sandbox ref sandbox int; do \
-   		cp ecs-proxies-deploy.yml dist/ecs-deploy-$$env.yml; \
-	done
+	cp ecs-proxies-deploy.yml dist/ecs-deploy-all.yml
 
 check-licenses:
 	@echo "Not configured"
