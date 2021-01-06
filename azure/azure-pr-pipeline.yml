@@ -8,7 +8,7 @@ resources:
     - repository: common
       type: github
       name: NHSDigital/api-management-utils
-      ref: refs/heads/master
+      ref: refs/heads/mm-apm-1598-allow-pull-cross-account
       endpoint: NHSDigital
   pipelines:
   - pipeline: build_pipeline
