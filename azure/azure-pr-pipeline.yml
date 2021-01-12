@@ -8,7 +8,7 @@ resources:
     - repository: common
       type: github
       name: NHSDigital/api-management-utils
-      ref: refs/heads/master
+      ref: APM-1598-deploy-docker-prod-from-ptl
       endpoint: NHSDigital
   pipelines:
   - pipeline: build_pipeline
