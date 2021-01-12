@@ -45,15 +45,15 @@ async def test_wait_for_status(api_client: APISessionClient, api_test_config: AP
     )
 
 
-@pytest.mark.smoketest
-@pytest.mark.asyncio
-async def test_api_status_with_service_header_another_service(api_client: APISessionClient):
+# @pytest.mark.smoketest
+# @pytest.mark.asyncio
+# async def test_api_status_with_service_header_another_service(api_client: APISessionClient):
 
-    async with api_client.get("_status", headers={'x-apim-service': 'another-service'}) as r:
-        assert r.status == 200
-        body = await r.json()
+#     async with api_client.get("_status", headers={'x-apim-service': 'another-service'}) as r:
+#         assert r.status == 200
+#         body = await r.json()
 
-        assert body.get('service') == 'canary'
+#         assert body.get('service') == 'canary'
 
 
 # @pytest.mark.smoketest
