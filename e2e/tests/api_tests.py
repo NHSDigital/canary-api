@@ -56,12 +56,12 @@ async def test_api_status_with_service_header_another_service(api_client: APISes
         assert body.get('service') == 'canary'
 
 
-@pytest.mark.smoketest
-@pytest.mark.asyncio
-async def test_api_status_with_service_header(api_client: APISessionClient):
+# @pytest.mark.smoketest
+# @pytest.mark.asyncio
+# async def test_api_status_with_service_header(api_client: APISessionClient):
 
-    async with api_client.get("_status", headers={'x-apim-service': 'canary'}) as r:
-        assert r.status == 200
-        body = await r.json()
+#     async with api_client.get("_status", headers={'x-apim-service': 'canary'}) as r:
+#         assert r.status == 200
+#         body = await r.json()
 
-        assert body.get('service') == 'canary'
+#         assert body.get('service') == 'canary'
