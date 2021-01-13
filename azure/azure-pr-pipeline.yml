@@ -41,9 +41,9 @@ extends:
           post_deploy:
             - template: templates/e2e.yml
               parameters:
-                test_type: e2e
+                test_type: smoketest # Change back to e2e after testing
         - environment: internal-dev-sandbox
           post_deploy:
             - template: templates/e2e.yml
               parameters:
-                test_type: e2e
+                test_type: smoketest # Change back to e2e after testing
