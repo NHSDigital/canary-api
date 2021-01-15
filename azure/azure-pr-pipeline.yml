@@ -8,7 +8,7 @@ resources:
     - repository: common
       type: github
       name: NHSDigital/api-management-utils
-      ref: refs/heads/master
+      ref: refs/heads/APM-1598-point-ecs-task-def-to-dev-registry
       endpoint: NHSDigital
   pipelines:
   - pipeline: build_pipeline
