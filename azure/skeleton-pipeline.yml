@@ -37,8 +37,6 @@ stages:
             ls
           displayName: Show Canary
 
-        - checkout: s3-cache-action
-
         - bash: |
             echo Hello s3-cache-action
             ls
