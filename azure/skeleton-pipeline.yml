@@ -38,6 +38,7 @@ stages:
             echo Canary
             cd canary-api
             ls
+            cd ..
             echo S3
             cd apim-s3-cache-action
             ls
