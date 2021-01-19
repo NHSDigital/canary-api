@@ -33,13 +33,15 @@ stages:
         - bash: |
             echo Hello Canary
             ls
+            cd apim-s3-cache-action
+            ls
+          displayName: Show S3 Cache action
+
+        - checkout: s3-cache-action
+
+        - bash: |
+            echo Hello Canary
+            ls
             cd canary-api
             ls
           displayName: Show Canary
-
-        - bash: |
-            echo Hello s3-cache-action
-            ls
-            cd apim-s3-cache-action
-            ls
-          displayName: Show S3 Cache Action
