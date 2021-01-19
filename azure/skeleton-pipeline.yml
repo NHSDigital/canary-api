@@ -32,8 +32,12 @@ stages:
 
         - checkout: s3-cache-action
 
-    - job: display_repos
-      steps:
         - bash: |
             echo Route
+            ls
+            echo Canary
+            cd canary-api
+            ls
+            echo S3
+            cd apim-s3-cache-action
             ls
