@@ -1,0 +1,34 @@
+name: "$(SourceBranchName)+$(BuildID)"
+
+trigger:
+  branches:
+    include:
+      - tags/refs/v*
+  tags:
+    include:
+      - v*
+
+pr:
+  branches:
+    include: ['*']
+
+resources:
+  repositories:
+    - repository: s3-cache-action
+      type: github
+      name: NHSDigital/apim-s3-cache-action
+      ref: refs/heads/apm-1741-pipelines-integration-poc
+      endpoint: NHSDigital
+
+pool:
+  vmImage: "ubuntu-18.04"
+
+stages:
+  - stage: simulate_deploy
+    jobs:
+    - job: say_hello
+      steps:
+        - checkout: self
+
+        - bash: echo Hello
+          displayName: Say Hello
