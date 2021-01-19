@@ -40,4 +40,4 @@ stages:
         - bash: |
             echo Hello s3-cache-action
             ls
-          display: Show S3 Cache Action
+          displayName: Show S3 Cache Action
