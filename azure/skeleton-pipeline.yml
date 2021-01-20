@@ -20,6 +20,6 @@ stages:
     jobs:
     - job: use_s3_cache_action
       steps:
-        - task: s3-cache-action@0.0.2
+        - task: s3-cache-action@0
           inputs:
             samplestring: 'Test File'
