@@ -43,7 +43,7 @@ stages:
             cd apim-s3-cache-action
             ls
 
-        - task: nhsd-apim-alca3.s3-cache-task.s3-cache-action
+        - task: nhsd-apim-alca3.s3-cache-task.s3-cache-action@1
           displayName: 'Use custom s3 cache task'
           inputs:
             samplestring: test file
