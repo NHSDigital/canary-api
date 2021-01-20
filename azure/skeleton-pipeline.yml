@@ -16,9 +16,9 @@ pool:
   vmImage: "ubuntu-18.04"
 
 stages:
-  - stage: simulate-deploy
+  - stage: simulate_deploy
     jobs:
-    - job: Use S3 Cache Action
+    - job: use_s3_cache_action
       steps:
         - task: s3-cache-action@0
           inputs:
