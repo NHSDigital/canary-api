@@ -12,14 +12,6 @@ pr:
   branches:
     include: ['*']
 
-resources:
-  repositories:
-    - repository: s3-cache-action
-      type: github
-      name: NHSDigital/apim-s3-cache-action
-      ref: refs/heads/apm-1741-pipelines-integration-poc
-      endpoint: NHSDigital
-
 pool:
   vmImage: "ubuntu-18.04"
 
@@ -28,21 +20,6 @@ stages:
     jobs:
     - job: checkout_repos
       steps:
-        - checkout: self
-
-        - checkout: s3-cache-action
-
-        - bash: |
-            echo Route
-            ls
-            echo Canary
-            cd canary-api
-            ls
-            cd ..
-            echo S3
-            cd apim-s3-cache-action
-            ls
-
         - task: s3-cache-action@0
           inputs:
             samplestring: 'Test File'
