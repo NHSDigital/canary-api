@@ -23,4 +23,3 @@ stages:
         - task: s3-cache-action@0
           inputs:
             samplestring: "Test File"
-          vstsFeed: "$(ArtifactFeed)"
