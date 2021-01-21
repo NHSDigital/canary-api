@@ -8,7 +8,7 @@ resources:
     - repository: common
       type: github
       name: NHSDigital/api-management-utils
-      ref: APM-1753-fix-pr-pipeline-default-args #refs/heads/master
+      ref: refs/heads/master
       endpoint: NHSDigital
   pipelines:
   - pipeline: build_pipeline
