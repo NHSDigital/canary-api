@@ -1,3 +1,4 @@
+docker_service_health_check_grace_period_seconds: 120
 docker_service:
   - name: canary-api
     expose: true
