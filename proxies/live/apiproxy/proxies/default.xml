@@ -45,6 +45,13 @@
     <BasePath>{{ SERVICE_BASE_PATH }}</BasePath>
     <VirtualHost>secure</VirtualHost>
   </HTTPProxyConnection>
+  <PostClientFlow name="PostClientFlow">
+    <Response>
+      <Step>
+        <Name>FlowCallout.LogToSplunk</Name>
+      </Step>
+    </Response>
+  </PostClientFlow>
   <RouteRule name="NoRoute">
     <Condition>request.verb == "OPTIONS" AND request.header.origin != null AND request.header.Access-Control-Request-Method != null</Condition>
   </RouteRule>
