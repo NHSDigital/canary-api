@@ -8,7 +8,7 @@ resources:
     - repository: common
       type: github
       name: NHSDigital/api-management-utils
-      ref: heads/refs/APM-1733-fix-apidoc-deploy
+      ref: heads/refs/APM-1701-Set-default-scopes
       endpoint: NHSDigital
   pipelines:
   - pipeline: build_pipeline
