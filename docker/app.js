@@ -15,6 +15,6 @@ app.get('/', (req, res) => { res.send("Hello user!") });
 app.get('/_health', (req, res) => { ping_handler(req, res) });
 app.get('/_status', (req, res) => { ping_handler(req, res) });
 app.get('/_ping', (req, res) => { ping_handler(req, res) });
-app.get('*', (req, res) => { res.send(`Star Endpoint. Path - {req.path}`) });
+app.get('*', (req, res) => { res.send(`Star Endpoint. Path - ${req.path}`) });
 
 module.exports = app;
