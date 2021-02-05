@@ -19,17 +19,17 @@
       </Response>
       <Condition>(proxy.pathsuffix MatchesPath "/_ping") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
     </Flow>
-    <Flow name="Flow.Hello">
+    <Flow name="Flow.VerifyApiKeyCanary">
       <Description/>
       <Request>
         <Step>
-          <Name>OAuthV2.VerifyAccessToken</Name>
+          <Name>VerifyApiKey-Header</Name>
         </Step>
       </Request>
       <Response/>
-      <Condition>(proxy.pathsuffix MatchesPath "/") and (request.verb = "GET")</Condition>
+      <Condition>(not (request.header.apikey is null))</Condition>
     </Flow>
-    <Flow name="Flow.Health">
+    <Flow name="Flow.OAuthV2Canary">
       <Description/>
       <Request>
         <Step>
@@ -37,7 +37,6 @@
         </Step>
       </Request>
       <Response/>
-      <Condition>(proxy.pathsuffix MatchesPath "/_health") and (request.verb = "GET")</Condition>
     </Flow>
   </Flows>
   <PreFlow/>
