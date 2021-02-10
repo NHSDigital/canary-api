@@ -27,7 +27,7 @@
         </Step>
       </Request>
       <Response/>
-      <Condition>(not (request.header.apikey is null))</Condition>
+      <Condition>(not (proxy.pathsuffix MatchesPath "/_status") and (not (request.header.apikey is null)))</Condition>
     </Flow>
     <Flow name="Flow.OAuthV2Canary">
       <Description/>
@@ -37,6 +37,7 @@
         </Step>
       </Request>
       <Response/>
+      <Condition>(not (proxy.pathsuffix MatchesPath "/_status")) </Condition>
     </Flow>
   </Flows>
   <PreFlow/>
