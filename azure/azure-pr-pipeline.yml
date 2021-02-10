@@ -8,7 +8,7 @@ resources:
     - repository: common
       type: github
       name: NHSDigital/api-management-utils
-      ref: heads/refs/APM-1574-pipeline-regression-tests
+      ref: refs/heads/APM-1574-pipeline-regression-tests
       endpoint: NHSDigital
   pipelines:
   - pipeline: build_pipeline
