@@ -1,4 +1,4 @@
-DESCRIPTION: tweet tweet
+DESCRIPTION: The Canary API is used for testing internal processes for API Management releases
 APIGEE_ENVIRONMENTS:
   - name: internal-dev
     display_name: Internal Development
@@ -27,7 +27,7 @@ meta:
 apigee:
   environments:
 {% for ENV in APIGEE_ENVIRONMENTS %}
-{% set TITLE = 'Canary API (' + ENV.display_name + ')' %}
+{% set TITLE = 'Canary API (' + ENV.display_name + ' Environment)' %}
 {% set NAME = 'canary-api-' + ENV.name %}
   - name: {{ ENV.name }}
     products:
