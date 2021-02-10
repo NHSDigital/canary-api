@@ -33,55 +33,16 @@ extends:
     product_display_name: ${{ variables.product_display_name }}
     product_description: ${{ variables.product_description }}
     spec_file: ${{ variables.spec_file }}
-#     apigee_deployments:
-#       - environment: internal-dev
-#         post_deploy:
-#           - template: templates/e2e.yml
-#             parameters:
-#               test_type: smoketest
-#       - environment: internal-dev-sandbox
-#         post_deploy:
-#           - template: templates/e2e.yml
-#             parameters:
-#               test_type: smoketest
-#       - environment: internal-qa
-#         post_deploy:
-#           - template: templates/e2e.yml
-#             parameters:
-#               test_type: smoketest
-#       - environment: internal-qa-sandbox
-#         post_deploy:
-#           - template: templates/e2e.yml
-#             parameters:
-#               test_type: smoketest
-#       - environment: sandbox
-#         post_deploy:
-#           - template: templates/e2e.yml
-#             parameters:
-#               test_type: smoketest
-#         depends_on:
-#           - internal_qa_sandbox
-#       - environment: int
-#         post_deploy:
-#           - template: templates/e2e.yml
-#             parameters:
-#               test_type: smoketest
-#         depends_on:
-#           - internal_qa
-#           - internal_qa_sandbox
-#       - environment: ref
-#         post_deploy:
-#           - template: templates/e2e.yml
-#             parameters:
-#               test_type: smoketest
-#         depends_on:
-#           - internal_qa
-#           - internal_qa_sandbox
-#       - environment: prod
-# #         post_deploy:
-# #           - template: templates/e2e.yml
-# #             parameters:
-# #               service_name: ${{ variables.service_name }}
-#         depends_on:
-#           - int
-#           - ref
+    post_deploy:
+      - template: templates/e2e.yml
+        parameters:
+          test_type: smoketest
+    apigee_deployments:
+      - environment: internal-dev
+      - environment: internal-dev-sandbox
+      - environment: internal-qa
+      - environment: internal-qa-sandbox
+      - environment: sandbox
+      - environment: int
+      - environment: ref
+      - environment: prod

@@ -1,0 +1,62 @@
+DESCRIPTION: The Canary API is used for testing internal processes for API Management releases
+APIGEE_ENVIRONMENTS:
+  - name: internal-dev
+    display_name: Internal Development
+  - name: internal-dev-sandbox
+    display_name: Internal Development Sandbox
+  - name: internal-qa
+    display_name: Internal QA
+  - name: internal-qa-sandbox
+    display_name: Internal QA Sandbox
+  - name: ref
+    display_name: Reference
+  - name: sandbox
+    display_name: Sandbox
+  - name: int
+    display_name: Integration Testing
+  - name: prod
+    display_name: Production
+---
+meta:
+  api:
+    name: canary-api
+    guid: 96836235-09a5-4064-9220-0812765ebdd7
+    spec_guids:
+      - 0af08cfb-6835-47b5-867c-95d41ef849b5
+  schema_version: 1
+apigee:
+  environments:
+{% for ENV in APIGEE_ENVIRONMENTS %}
+{% set TITLE = 'Canary API (' + ENV.display_name + ' Environment)' %}
+{% set NAME = 'canary-api-' + ENV.name %}
+  - name: {{ ENV.name }}
+    products:
+      - name: {{ NAME }}
+        approvalType: auto
+        attributes:
+          - name: access
+            value: public
+          - name: ratelimit
+            value: 5ps
+        description: {{ DESCRIPTION }}
+        displayName: {{ TITLE }}
+        environments: [ {{ ENV.name }} ]
+        proxies:
+          - canary-api-{{ ENV.name }}
+          - identity-service-{{ ENV.name }}
+        scopes: []
+        quota: '300'
+        quotaInterval: '1'
+        quotaTimeUnit: minute
+    specs:
+      - name: {{ NAME }}
+        path: canary-api.json
+    api_catalog:
+      - edgeAPIProductName: {{ NAME }}
+        anonAllowed: true
+        description: {{ DESCRIPTION }}
+        requireCallbackUrl: false
+        title: {{ TITLE }}
+        visibility: false
+        specId: {{ NAME }}
+{% endfor %}

@@ -19,17 +19,17 @@
       </Response>
       <Condition>(proxy.pathsuffix MatchesPath "/_ping") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
     </Flow>
-    <Flow name="Flow.Hello">
+    <Flow name="Flow.VerifyApiKeyCanary">
       <Description/>
       <Request>
         <Step>
-          <Name>OAuthV2.VerifyAccessToken</Name>
+          <Name>VerifyApiKey-Header</Name>
         </Step>
       </Request>
       <Response/>
-      <Condition>(proxy.pathsuffix MatchesPath "/") and (request.verb = "GET")</Condition>
+      <Condition>(not (proxy.pathsuffix MatchesPath "/_status") and (not (request.header.apikey is null)))</Condition>
     </Flow>
-    <Flow name="Flow.Health">
+    <Flow name="Flow.OAuthV2Canary">
       <Description/>
       <Request>
         <Step>
@@ -37,7 +37,7 @@
         </Step>
       </Request>
       <Response/>
-      <Condition>(proxy.pathsuffix MatchesPath "/_health") and (request.verb = "GET")</Condition>
+      <Condition>(not (proxy.pathsuffix MatchesPath "/_status")) </Condition>
     </Flow>
   </Flows>
   <PreFlow/>
@@ -45,6 +45,13 @@
     <BasePath>{{ SERVICE_BASE_PATH }}</BasePath>
     <VirtualHost>secure</VirtualHost>
   </HTTPProxyConnection>
+  <PostClientFlow name="PostClientFlow">
+    <Response>
+      <Step>
+        <Name>FlowCallout.LogToSplunk</Name>
+      </Step>
+    </Response>
+  </PostClientFlow>
   <RouteRule name="NoRoute">
     <Condition>request.verb == "OPTIONS" AND request.header.origin != null AND request.header.Access-Control-Request-Method != null</Condition>
   </RouteRule>

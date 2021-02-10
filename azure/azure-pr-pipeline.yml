@@ -35,4 +35,8 @@ extends:
     product_display_name: ${{ variables.product_display_name }}
     product_description: ${{ variables.product_description }}
     spec_file: ${{ variables.spec_file }}
-    deploy_review_sandbox: true
+    deploy_review_sandbox: false
+    post_deploy:
+      - template: templates/e2e.yml
+        parameters:
+          test_type: smoketest
