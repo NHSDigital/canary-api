@@ -44,7 +44,9 @@ apigee:
         proxies:
           - canary-api-{{ ENV.name }}
           - identity-service-{{ ENV.name }}
-        scopes: []
+        scopes:
+          - 'urn:nhsd:apim:app:level3:canary-api'
+          - 'urn:nhsd:apim:user-nhs-id:aal3:canary-api'
         quota: '300'
         quotaInterval: '1'
         quotaTimeUnit: minute
