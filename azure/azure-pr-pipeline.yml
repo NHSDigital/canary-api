@@ -40,3 +40,24 @@ extends:
       - template: templates/e2e.yml
         parameters:
           test_type: smoketest
+    apigee_deployments:
+      - environment: internal-dev
+      - environment: internal-dev
+        stage_name: internal-dev-blue
+        service_name: canary-api-blue
+        service_base_path: canary-api-blue
+      - environment: internal-dev
+        stage_name: internal-dev-green
+        service_name: canary-api-green
+        service_base_path: canary-api-green
+      - environment: internal-dev-sandbox
+      - environment: int
+      - environment: int
+        stage_name: int_no_smartcard
+        fully_qualified_service_name: identity-service-int-no-smartcard
+        service_base_path: oauth2-no-smartcard
+        jinja_templates:
+          IDENTITY_TARGET_SERVER: identity-server-no-smartcard
+          VARIABLES_KVM: identity-service-variables-no-smartcard
+          ENCRYPTED_VARIABLES_KVM: identity-service-variables-encrypted-no-smartcard
+          NUM_RANDOM_LONG_INTS_FOR_STATE: 4
