@@ -44,9 +44,11 @@ extends:
       - environment: internal-dev
       - environment: internal-dev
         stage_name: internal-dev-blue
-        service_name: canary-api-blue
-        service_base_path: canary-api-blue
+        service_name: ${{ variables.service_name }}-blue
+        short_service_name: ${{ variables.short_service_name }}-b
+        service_base_path: ${{ variables.service_base_path }}-blue
       - environment: internal-dev
         stage_name: internal-dev-green
-        service_name: canary-api-green
-        service_base_path: canary-api-green
+        service_name: ${{ variables.service_name }}-green
+        short_service_name: ${{ variables.short_service_name }}-b
+        service_base_path: ${{ variables.service_base_path }}-green
