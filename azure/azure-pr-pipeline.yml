@@ -50,4 +50,3 @@ extends:
         stage_name: internal-dev-green
         service_name: canary-api-green
         service_base_path: canary-api-green
-      - environment: internal-dev-sandbox
