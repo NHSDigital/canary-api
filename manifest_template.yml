@@ -43,6 +43,10 @@ apigee:
         environments: [ {{ ENV.name }} ]
         proxies:
           - canary-api-{{ ENV.name }}
+          {% if ENV == "internal-dev" %}
+          - canary-api-{{ ENV.name }}-blue
+          - canary-api-{{ ENV.name }}-green
+          {% endif %}
           - identity-service-{{ ENV.name }}
         scopes:
           - 'urn:nhsd:apim:app:level3:canary-api'
