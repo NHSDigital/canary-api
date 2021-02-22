@@ -8,7 +8,7 @@ resources:
     - repository: common
       type: github
       name: NHSDigital/api-management-utils
-      ref: refs/heads/master
+      ref: refs/heads/apm-1748-blue-green
       endpoint: NHSDigital
   pipelines:
   - pipeline: build_pipeline
@@ -40,3 +40,6 @@ extends:
       - template: templates/e2e.yml
         parameters:
           test_type: smoketest
+    apigee_deployments:
+      - environment: internal-dev
+        blue_green_deployment: true
