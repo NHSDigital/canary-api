@@ -48,7 +48,7 @@ extends:
           location: '.venv'
           debug: true
           alias: 'Poetry'
-        displayName: cache node modules
+        displayName: cache python dependencies
       - bash: |
           make install-python
         condition: ne(variables['CacheRestored-Poetry'], 'true')
