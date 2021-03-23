@@ -31,7 +31,7 @@ extends:
     pre_install_steps:
       - task: s3-cache-action@1
         inputs:
-          key: 'node modules | $(System.DefaultWorkingDirectory) | package-lock.json'
+          key: 'node modules | ${{ parameters.service_name }} | package-lock.json'
           location: 'node_modules'
           debug: true
           alias: 'NodeModules'
@@ -40,10 +40,11 @@ extends:
           # source ~/.nvm/nvm.sh
           make install-node
         condition: ne(variables['CacheRestored-NodeModules'], 'true')
+        workingDirectory: '${{ parameters.service_name }}'
         displayName: Install node dependencies
       - task: s3-cache-action@1
         inputs:
-          key: 'poeetry | $(System.DefaultWorkingDirectory) | poetry.lock'
+          key: 'poeetry | ${{ parameters.service_name }} | poetry.lock'
           location: '.venv'
           debug: true
           alias: 'Poetry'
@@ -51,6 +52,8 @@ extends:
       - bash: |
           make install-python
         condition: ne(variables['CacheRestored-Poetry'], 'true')
+        workingDirectory: '${{ parameters.service_name }}'
         displayName: Install python dependencies
       - bash: make install-hooks
+        workingDirectory: '${{ parameters.service_name }}'
         displayName: Install hooks
