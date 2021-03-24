@@ -32,7 +32,7 @@ extends:
       - task: s3-cache-action@1
         inputs:
           key: 'node modules | ${{ variables.service_name }} | package-lock.json'
-          location: 's/${{ variables.service_name }}/node_modules'
+          location: '${{ variables.service_name }}/node_modules'
           debug: true
           alias: 'NodeModules'
         displayName: cache node modules
@@ -45,7 +45,7 @@ extends:
       - task: s3-cache-action@1
         inputs:
           key: 'poetry | ${{ variables.service_name }} | poetry.lock'
-          location: 's/${{ variables.service_name }}/.venv'
+          location: '${{ variables.service_name }}/.venv'
           debug: true
           alias: 'Poetry'
         displayName: cache python dependencies
