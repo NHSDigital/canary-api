@@ -32,7 +32,7 @@ extends:
       - task: s3-cache-action@1
         inputs:
           key: 'node modules | ${{ variables.service_name }} | package-lock.json'
-          location: 'node_modules'
+          location: 's/node_modules'
           debug: true
           alias: 'NodeModules'
         displayName: cache node modules
@@ -45,14 +45,14 @@ extends:
       - task: s3-cache-action@1
         inputs:
           key: 'poetry | ${{ variables.service_name }} | poetry.lock'
-          location: '.venv'
+          location: 's/.venv'
           debug: true
           alias: 'Poetry'
         displayName: cache python dependencies
       - bash: |
           make install-python
         condition: ne(variables['CacheRestored-Poetry'], 'true')
-        workingDirectory: '${{ variables.service_name }}'
+        workingDirectory: 's/${{ variables.service_name }}'
         displayName: Install python dependencies
       - bash: make install-hooks
         workingDirectory: '${{ variables.service_name }}'
