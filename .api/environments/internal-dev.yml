@@ -1,0 +1,13 @@
+# the following are implicitly set based on the file name
+# namespace: internal-dev
+# apigee_environment: internal-dev
+# apigee_organisation: nonprod
+# aws_account: ptl
+
+# you can do deep updates of existing keys
+# to delete a key, just set it to null
+aws:
+  services:
+    canary_api:
+      environment:
+        LOG_LEVEL: debug

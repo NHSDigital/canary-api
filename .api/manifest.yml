@@ -1,0 +1,64 @@
+# This file contains information on your API that is the same for every env
+#
+# To make changes to a specific env, use .api/environment/<env>.yml, where you
+# can 
+
+schema_version: 2
+name: &name canary-api
+guid: 96836235-09a5-4064-9220-0812765ebdd7
+
+apigee:
+  proxies:
+    *name:
+      name: *name
+      bundle: "proxies/live"
+  products:
+    *name:
+      name: *name
+      display_name: Canary API
+      description: The Canary API is used for testing internal processes for API Management releases
+      approval_type: auto
+      attributes:
+        - name: access
+          value: public
+        - name: ratelimit
+          value: 5ps
+      proxies:
+        - *name
+        - identity-service
+      scopes:
+        - 'urn:nhsd:apim:app:level3:canary-api'
+        - 'urn:nhsd:apim:user-nhs-id:aal3:canary-api'
+      quota: '300'
+      quota_interval: '1'
+      quota_time_unit: minute
+  specs:
+    *name:
+      name: *name
+      path: "/specs/canary-api.json"
+      guid: "0af08cfb-6835-47b5-867c-95d41ef849b5"
+  api_catalog:
+    *name:
+      api_product: *name
+      anonAllowed: true
+      requireCallbackUrl: false
+      visibility: false
+      specId: *name
+
+aws:
+  containers:
+    *name:
+      name: *name
+      dockerfile: "docker/Dockerfile"
+      build_context: "docker"
+  services:
+    *name:
+      name: *name
+      expose: true
+      environment:
+        NODE_ENV: production
+        LOG_LEVEL: info
+        VERSION_INFO: ${VERSION_INFO}
+      health_check:
+        matcher: "200"
+        path: "/_health"
