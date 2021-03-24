@@ -27,7 +27,7 @@ extends:
   parameters:
     service_name: ${{ variables.service_name }}
     short_service_name: ${{ variables.short_service_name }}
-    pre_install_steps:
+    cache_steps:
       - task: s3-cache-action@1
         inputs:
           key: 'node modules | ${{ variables.service_name }} | package-lock.json'
