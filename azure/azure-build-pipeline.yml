@@ -27,7 +27,6 @@ extends:
   parameters:
     service_name: ${{ variables.service_name }}
     short_service_name: ${{ variables.short_service_name }}
-    global_install: false
     pre_install_steps:
       - task: s3-cache-action@1
         inputs:
@@ -36,12 +35,6 @@ extends:
           debug: true
           alias: 'NodeModules'
         displayName: cache node modules
-      - bash: |
-          source ~/.nvm/nvm.sh
-          make install-node
-        condition: ne(variables['CacheRestored-NodeModules'], 'true')
-        workingDirectory: '${{ variables.service_name }}'
-        displayName: Install node dependencies
       - task: s3-cache-action@1
         inputs:
           key: 'poetry | ${{ variables.service_name }} | poetry.lock'
@@ -49,11 +42,3 @@ extends:
           debug: true
           alias: 'Poetry'
         displayName: cache python dependencies
-      - bash: |
-          make install-python
-        condition: ne(variables['CacheRestored-Poetry'], 'true')
-        workingDirectory: '${{ variables.service_name }}'
-        displayName: Install python dependencies
-      - bash: make install-hooks
-        workingDirectory: '${{ variables.service_name }}'
-        displayName: Install hooks
