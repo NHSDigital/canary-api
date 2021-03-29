@@ -43,6 +43,7 @@ extends:
       - environment: internal-qa
       - environment: internal-qa-sandbox
       - environment: sandbox
+      - environment: dev
       - environment: int
       - environment: ref
       - environment: prod
