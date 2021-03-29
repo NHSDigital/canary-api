@@ -10,6 +10,8 @@ APIGEE_ENVIRONMENTS:
     display_name: Internal QA Sandbox
   - name: ref
     display_name: Reference
+  - name: dev
+    display_name: Development
   - name: sandbox
     display_name: Sandbox
   - name: int
