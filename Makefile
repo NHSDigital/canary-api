@@ -24,7 +24,7 @@ release: clean publish
 	mkdir -p dist/proxies/live
 	mkdir -p dist/proxies/noaws
 	cp -Rv proxies/live/apiproxy dist/proxies/live
-	cp -Rv proxies/live/noaws dist/proxies/noaws
+	cp -Rv proxies/noaws/apiproxy dist/proxies/noaws
 	cp ecs-proxies-deploy.yml dist/ecs-deploy-all.yml
 
 check-licenses:
