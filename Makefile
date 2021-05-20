@@ -22,7 +22,9 @@ release: clean publish
 	cp build/canary-api.json dist
 	cp -R e2e dist
 	mkdir -p dist/proxies/live
+	mkdir -p dist/proxies/noaws
 	cp -Rv proxies/live/apiproxy dist/proxies/live
+	cp -Rv proxies/live/noaws dist/proxies/noaws
 	cp ecs-proxies-deploy.yml dist/ecs-deploy-all.yml
 
 check-licenses:
@@ -38,4 +40,6 @@ publish: clean
 build-proxy:
 	rm -rf build/proxies;
 	mkdir -p build/proxies/live;
+	mkdir -p build/proxies/noaws;
 	cp -Rv proxies/live/apiproxy build/proxies/live
+	cp -Rv proxies/noaws/apiproxy build/proxies/noaws

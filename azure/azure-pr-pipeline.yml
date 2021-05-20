@@ -36,7 +36,14 @@ extends:
     product_description: ${{ variables.product_description }}
     spec_file: ${{ variables.spec_file }}
     deploy_review_sandbox: false
-    post_deploy:
-      - template: templates/e2e.yml
-        parameters:
-          test_type: smoketest
+    apigee_deployments:
+      - environment: internal-dev
+        post_deploy:
+          - template: templates/e2e.yml
+            parameters:
+              test_type: smoketest
+      - environment: internal-dev
+        service_name: ${{ variables.service_name }}-noaws
+        stage_name: canary_api_noaws
+        service_base_path: ${{ variables.service_base_path }}-test
+        proxy_path: noaws
