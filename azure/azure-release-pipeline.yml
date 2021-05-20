@@ -33,6 +33,7 @@ extends:
     product_display_name: ${{ variables.product_display_name }}
     product_description: ${{ variables.product_description }}
     spec_file: ${{ variables.spec_file }}
+    enable_monitoring: true
     post_deploy:
       - template: templates/e2e.yml
         parameters:
@@ -44,6 +45,11 @@ extends:
       - environment: internal-qa-sandbox
       - environment: sandbox
       - environment: dev
+      # 2 stage deployment to same environment to test condition
       - environment: int
+      - environment: int
+        stage_name: int_test
+        fully_qualified_service_name: canary-api-test
+        service_base_path: canary-api-test
       - environment: ref
       - environment: prod
