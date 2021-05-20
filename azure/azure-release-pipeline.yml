@@ -45,7 +45,7 @@ extends:
       - environment: internal-qa-sandbox
       - environment: sandbox
       - environment: dev
-      # 2 stage deployment to same environment to test condition
+      # 2 stage deployment to same environment to test deployment condition
       - environment: int
       - environment: int
         stage_name: int_test
