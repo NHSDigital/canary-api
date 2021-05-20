@@ -49,6 +49,7 @@ extends:
       - environment: int
       - environment: int
         stage_name: int_test
+        short_service_name: canary-test
         fully_qualified_service_name: canary-api-test
         service_base_path: canary-api-test
       - environment: ref
