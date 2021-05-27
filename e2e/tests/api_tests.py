@@ -6,16 +6,6 @@ from api_test_utils import poll_until
 from api_test_utils.api_session_client import APISessionClient
 from api_test_utils.api_test_session_config import APITestSessionConfig
 
-def get_env(variable_name: str) -> str:
-    """Returns a environment variable"""
-    try:
-        var = os.environ[variable_name]
-        if not var:
-            raise RuntimeError(f"Variable is null, Check {variable_name}.")
-        return var
-    except KeyError:
-        raise RuntimeError(f"Variable is not set, Check {variable_name}.")
-
 
 @pytest.mark.smoketest
 @pytest.mark.asyncio
@@ -34,6 +24,7 @@ async def test_wait_for_ping(api_client: APISessionClient, api_test_config: APIT
         timeout=60
     )
 
+
 @pytest.mark.smoketest
 @pytest.mark.asyncio
 async def test_check_status_is_secured(api_client: APISessionClient):
@@ -41,12 +32,13 @@ async def test_check_status_is_secured(api_client: APISessionClient):
     async with api_client.get("_status", allow_retries=True) as resp:
         assert resp.status == 401
 
+
 @pytest.mark.smoketest
 @pytest.mark.asyncio
 async def test_wait_for_status(api_client: APISessionClient, api_test_config: APITestSessionConfig):
 
     async def _is_complete(resp: ClientResponse):
-
+        print(resp)
         if resp.status != 200:
             return False
         body = await resp.json()
@@ -60,6 +52,14 @@ async def test_wait_for_status(api_client: APISessionClient, api_test_config: AP
         make_request=lambda: api_client.get('_status', headers={"apikey": env.status_endpoint_api_key()}),
         until=_is_complete,
         timeout=60
+    )
+
+    await poll_until(
+        make_request=lambda: api_client.get(
+            "_status", headers={"apikey": env.status_endpoint_api_key()}
+        ),
+        until=is_deployed,
+        timeout=deploy_timeout,
     )
 
 
