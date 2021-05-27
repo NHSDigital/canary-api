@@ -38,7 +38,6 @@ async def test_check_status_is_secured(api_client: APISessionClient):
 async def test_wait_for_status(api_client: APISessionClient, api_test_config: APITestSessionConfig):
 
     async def _is_complete(resp: ClientResponse):
-        print(resp)
         if resp.status != 200:
             return False
         body = await resp.json()
@@ -65,13 +64,3 @@ async def test_api_status_with_service_header_another_service(api_client: APISes
 
     assert body.get('service') == 'canary'
 
-
-# @pytest.mark.smoketest
-# @pytest.mark.asyncio
-# async def test_api_status_with_service_header(api_client: APISessionClient):
-
-#     async with api_client.get("_status", headers={'x-apim-service': 'canary'}) as r:
-#         assert r.status == 200
-#         body = await r.json()
-
-#         assert body.get('service') == 'canary'
