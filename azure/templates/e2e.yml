@@ -13,6 +13,7 @@ steps:
         export APIGEE_ENVIRONMENT="$(APIGEE_ENVIRONMENT)"
         export SERVICE_BASE_PATH="$(SERVICE_BASE_PATH)"
         export STATUS_ENDPOINT_API_KEY="$(status-endpoint-api-key)"
+        echo $STATUS_ENDPOINT_API_KEY
         make -C e2e ${{ parameters.test_type }}
 
       workingDirectory: $(SERVICE_DIR)
