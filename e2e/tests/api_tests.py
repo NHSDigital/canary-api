@@ -1,9 +1,19 @@
 import pytest
+import os
 from aiohttp import ClientResponse
-from api_test_utils import env
 from api_test_utils import poll_until
 from api_test_utils.api_session_client import APISessionClient
 from api_test_utils.api_test_session_config import APITestSessionConfig
+
+def get_env(variable_name: str) -> str:
+    """Returns a environment variable"""
+    try:
+        var = os.environ[variable_name]
+        if not var:
+            raise RuntimeError(f"Variable is null, Check {variable_name}.")
+        return var
+    except KeyError:
+        raise RuntimeError(f"Variable is not set, Check {variable_name}.")
 
 
 @pytest.mark.smoketest
@@ -46,7 +56,7 @@ async def test_wait_for_status(api_client: APISessionClient, api_test_config: AP
         return version_info.get("commitId") == api_test_config.commit_id
 
     await poll_until(
-        make_request=lambda: api_client.get('_status', headers={"apikey": env.status_endpoint_api_key()}),
+        make_request=lambda: api_client.get('_status', headers={"apikey": get_env("STATUS_ENDPOINT_API_KEY")}),
         until=_is_complete,
         timeout=60
     )
@@ -56,7 +66,7 @@ async def test_wait_for_status(api_client: APISessionClient, api_test_config: AP
 @pytest.mark.asyncio
 async def test_api_status_with_service_header_another_service(api_client: APISessionClient):
 
-    resp = await api_client.get("_status", allow_retries=True, max_retries=5, headers={'x-apim-service': 'another-service', "apikey": env.status_endpoint_api_key()})
+    resp = await api_client.get("_status", allow_retries=True, max_retries=5, headers={'x-apim-service': 'another-service', "apikey": get_env("STATUS_ENDPOINT_API_KEY")})
     assert resp.status == 200
     body = await resp.json()
 
