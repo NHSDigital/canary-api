@@ -19,15 +19,19 @@
       </Response>
       <Condition>(proxy.pathsuffix MatchesPath "/_ping") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
     </Flow>
-    <Flow name="Flow.VerifyApiKeyCanary">
+    <Flow name="StatusEndpoint">
       <Description/>
       <Request>
         <Step>
-          <Name>VerifyApiKey-Header</Name>
+          <Name>KeyValueMapOperations.GetSharedSecureVariables</Name>
+        </Step>
+        <Step>
+          <Condition>private.apigee.status-endpoint-api-key NotEquals request.header.apikey</Condition>
+          <Name>RaiseFault.401Unauthorized</Name>
         </Step>
       </Request>
       <Response/>
-      <Condition>(not (proxy.pathsuffix MatchesPath "/_status") and (not (request.header.apikey is null)))</Condition>
+      <Condition>(proxy.pathsuffix MatchesPath "/_status") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
     </Flow>
     <Flow name="Flow.OAuthV2Canary">
       <Description/>
@@ -57,6 +61,9 @@
   </RouteRule>
   <RouteRule name="NoRoutePing">
     <Condition>(proxy.pathsuffix MatchesPath "/_ping") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
+  </RouteRule>
+  <RouteRule name="NoRouteStatus">
+    <Condition>(proxy.pathsuffix MatchesPath "/_status") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
   </RouteRule>
   <RouteRule name="target">
     <TargetEndpoint>target</TargetEndpoint>
