@@ -54,14 +54,6 @@ async def test_wait_for_status(api_client: APISessionClient, api_test_config: AP
         timeout=60
     )
 
-    await poll_until(
-        make_request=lambda: api_client.get(
-            "_status", headers={"apikey": env.status_endpoint_api_key()}
-        ),
-        until=is_deployed,
-        timeout=deploy_timeout,
-    )
-
 
 @pytest.mark.smoketest
 @pytest.mark.asyncio
