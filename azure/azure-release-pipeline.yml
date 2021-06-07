@@ -48,4 +48,3 @@ extends:
       - environment: dev
       - environment: int
       - environment: ref
-      - environment: prod
