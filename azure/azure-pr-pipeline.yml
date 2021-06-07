@@ -8,7 +8,7 @@ resources:
     - repository: common
       type: github
       name: NHSDigital/api-management-utils
-      ref: refs/heads/master
+      ref: refs/heads/APM-2241-fix-env-names-in-monitoring
       endpoint: NHSDigital
   pipelines:
   - pipeline: build_pipeline
