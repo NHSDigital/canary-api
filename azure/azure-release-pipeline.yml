@@ -8,7 +8,7 @@ resources:
     - repository: common
       type: github
       name: NHSDigital/api-management-utils
-      ref: refs/pull/331/merge
+      ref: refs/heads/master
       endpoint: NHSDigital
   pipelines:
   - pipeline: build_pipeline
@@ -33,6 +33,8 @@ extends:
     product_display_name: ${{ variables.product_display_name }}
     product_description: ${{ variables.product_description }}
     spec_file: ${{ variables.spec_file }}
+    enable_status_monitoring: true
+    enable_monitoring: true
     post_deploy:
       - template: templates/e2e.yml
         parameters:
