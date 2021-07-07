@@ -33,7 +33,6 @@ extends:
     product_display_name: ${{ variables.product_display_name }}
     product_description: ${{ variables.product_description }}
     spec_file: ${{ variables.spec_file }}
-    enable_status_monitoring: false
     post_deploy:
       - template: templates/e2e.yml
         parameters:
