@@ -2,11 +2,13 @@
 <RaiseFault async="false" continueOnError="false" enabled="true" name="AssignMessage.503ServiceUnavailable">
     <DisplayName>AssignMessage.503ServiceUnavailable</DisplayName>
     <Properties/>
-    <Set>
-        <Headers/>
-        <Payload contentType="text/plain"/>
-        <StatusCode>503</StatusCode>
-         <ReasonPhrase>ServiceUnavailable</ReasonPhrase>
-    </Set>
+    <FaultResponse>
+        <Set>
+            <Headers/>
+            <Payload contentType="text/plain"/>
+            <StatusCode>503</StatusCode>
+            <ReasonPhrase>ServiceUnavailable</ReasonPhrase>
+        </Set>
+    </FaultResponse>
     <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
 </RaiseFault>
