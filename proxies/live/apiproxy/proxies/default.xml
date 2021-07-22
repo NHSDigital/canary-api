@@ -46,7 +46,7 @@
         </Flow>
     </Flows>
     <HTTPProxyConnection>
-        <BasePath>canary-api-pr-60</BasePath>
+        <BasePath>{{ SERVICE_BASE_PATH }}</BasePath>
         <VirtualHost>secure</VirtualHost>
     </HTTPProxyConnection>
     <PostClientFlow name="PostClientFlow">
