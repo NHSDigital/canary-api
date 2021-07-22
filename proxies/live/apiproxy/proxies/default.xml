@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ProxyEndpoint name="default">
     <Flows>
         <Flow name="OptionsPreFlight">
@@ -45,6 +44,7 @@
             <Condition>(not (proxy.pathsuffix MatchesPath "/_status")) </Condition>
         </Flow>
     </Flows>
+  <PreFlow/>
     <HTTPProxyConnection>
         <BasePath>{{ SERVICE_BASE_PATH }}</BasePath>
         <VirtualHost>secure</VirtualHost>
