@@ -27,9 +27,6 @@
                     <Name>KeyValueMapOperations.GetSharedSecureVariables</Name>
                 </Step>
                 <Step>
-                    <Name>AssignMessage.503ServiceUnavailable</Name>
-                </Step>
-                <Step>
                     <Condition>private.apigee.status-endpoint-api-key NotEquals request.header.apikey</Condition>
                     <Name>RaiseFault.401Unauthorized</Name>
                 </Step>
@@ -48,13 +45,6 @@
             <Condition>(not (proxy.pathsuffix MatchesPath "/_status")) </Condition>
         </Flow>
     </Flows>
-    <PreFlow>
-        <Request>
-            <Step>
-                <Name>AssignMessage.SetApimGuids</Name>
-            </Step>
-        </Request>
-    </PreFlow>
     <HTTPProxyConnection>
         <BasePath>canary-api-pr-60</BasePath>
         <VirtualHost>secure</VirtualHost>
