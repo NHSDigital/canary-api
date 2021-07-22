@@ -5,3 +5,9 @@ dist/
 scripts/__pycache__/
 .idea/
 .venv/
+
+.envrc
+.direnv/
+env
+**/__pycache__
+.dir-locals.el
