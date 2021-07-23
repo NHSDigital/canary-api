@@ -52,5 +52,7 @@ extends:
       - environment: int
         depends_on:
           - manual_approval_int
+          - internal_qa
+          - internal_qa_sandbox
       - environment: ref
       - environment: prod
