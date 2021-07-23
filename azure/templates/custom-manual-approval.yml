@@ -1,0 +1,18 @@
+- stage: Custom approval
+  displayName: Manual Approval
+  dependsOn: []
+  jobs:
+    - deployment: build # Or deploy?
+      displayName: Manual Approval Required
+      timeoutInMinutes: 40
+      pool:
+        name: Ubuntu-16.04
+      environment: "infrastructure-approval-ptl"
+      workspace:
+        clean: all
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - bash: |
+                    echo Approved
