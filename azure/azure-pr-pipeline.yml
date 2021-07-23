@@ -38,9 +38,13 @@ extends:
     product_description: ${{ variables.product_description }}
     spec_file: ${{ variables.spec_file }}
     deploy_review_sandbox: false
-    pre_deploy:
-      - template: templates/custom-manual-approval.yml
     post_deploy:
       - template: templates/e2e.yml
         parameters:
           test_type: smoketest
+    apigee_deployments:
+      - environment: infrastructure-approval-ptl
+        stage_name: manual_approval_test
+      - environment: internal-dev
+        dependsOn:
+          - manual_approval_test
