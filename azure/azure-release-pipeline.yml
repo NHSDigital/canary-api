@@ -39,6 +39,7 @@ extends:
       - template: templates/e2e.yml
         parameters:
           test_type: smoketest
+    manual_approval_env: manual-approval-ptl
     apigee_deployments:
       - environment: internal-dev
       - environment: internal-dev-sandbox
@@ -46,6 +47,10 @@ extends:
       - environment: internal-qa-sandbox
       - environment: sandbox
       - environment: dev
+      - environment: manual-approval
+        stage_name: manual_approval_int
       - environment: int
+        depends_on:
+          - manual_approval_int
       - environment: ref
       - environment: prod
