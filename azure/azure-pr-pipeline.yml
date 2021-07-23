@@ -45,5 +45,5 @@ extends:
       - environment: manual-approval
         stage_name: manual_approval_internal_dev
       - environment: internal-dev
-        dependsOn:
+        depends_on:
           - manual_approval_internal_dev
