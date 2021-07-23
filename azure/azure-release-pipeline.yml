@@ -8,7 +8,7 @@ resources:
     - repository: common
       type: github
       name: NHSDigital/api-management-utils
-      ref: refs/heads/master
+      ref: refs/heads/apm-2409-allow-custom-manual-approval
       endpoint: NHSDigital
   pipelines:
   - pipeline: build_pipeline

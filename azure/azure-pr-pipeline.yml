@@ -8,7 +8,7 @@ resources:
     - repository: common
       type: github
       name: NHSDigital/api-management-utils
-      ref: refs/heads/master
+      ref: refs/heads/apm-2409-allow-custom-manual-approval
       endpoint: NHSDigital
   pipelines:
   - pipeline: build_pipeline
@@ -20,33 +20,11 @@ resources:
           - refs/heads/main
           - refs/tags/v*
 
-# Test change. remove when finished
-
 pool:
   name: 'AWS-ECS'
 
 variables:
   - template: project.yml
-
-stages:
-  - stage: Custom approval
-    displayName: Manual Approval
-    dependsOn: []
-    jobs:
-      - deployment: build # Or deploy?
-        displayName: Manual Approval Required
-        timeoutInMinutes: 40
-        pool:
-          name: Ubuntu-16.04
-        environment: "infrastructure-approval-ptl"
-        workspace:
-          clean: all
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-                - bash: |
-                      echo Approved
 
 extends:
   template: azure/common/apigee-deployment.yml@common
@@ -62,3 +40,10 @@ extends:
       - template: templates/e2e.yml
         parameters:
           test_type: smoketest
+    apigee_deployments:
+      - environment: manual-approval
+        stage_name: manual_approval_internal_dev
+        manual_approval_env: manual-approval-ptl
+      - environment: internal-dev
+        dependsOn:
+          - manual_approval_internal_dev
