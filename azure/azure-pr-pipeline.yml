@@ -44,6 +44,7 @@ extends:
           test_type: smoketest
     apigee_deployments:
       - environment: infrastructure-approval-ptl
+        apigee_organization: nonprod
         stage_name: manual_approval_test
       - environment: internal-dev
         dependsOn:
