@@ -36,6 +36,7 @@ extends:
     product_description: ${{ variables.product_description }}
     spec_file: ${{ variables.spec_file }}
     deploy_review_sandbox: false
+    manual_approval_env: manual-approval-ptl
     post_deploy:
       - template: templates/e2e.yml
         parameters:
@@ -43,7 +44,6 @@ extends:
     apigee_deployments:
       - environment: manual-approval
         stage_name: manual_approval_internal_dev
-        manual_approval_env: manual-approval-ptl
       - environment: internal-dev
         dependsOn:
           - manual_approval_internal_dev
