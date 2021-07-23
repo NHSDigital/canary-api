@@ -28,6 +28,26 @@ pool:
 variables:
   - template: project.yml
 
+stages:
+  - stage: Custom approval
+    displayName: Manual Approval
+    dependsOn: []
+    jobs:
+      - deployment: build # Or deploy?
+        displayName: Manual Approval Required
+        timeoutInMinutes: 40
+        pool:
+          name: Ubuntu-16.04
+        environment: "infrastructure-approval-ptl"
+        workspace:
+          clean: all
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - bash: |
+                      echo Approved
+
 extends:
   template: azure/common/apigee-deployment.yml@common
   parameters:
@@ -42,10 +62,3 @@ extends:
       - template: templates/e2e.yml
         parameters:
           test_type: smoketest
-    apigee_deployments:
-      - environment: infrastructure-approval-ptl
-        apigee_organization: nonprod
-        stage_name: manual_approval_test
-      - environment: internal-dev
-        dependsOn:
-          - manual_approval_test
