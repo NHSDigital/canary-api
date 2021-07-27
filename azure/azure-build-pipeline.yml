@@ -17,7 +17,7 @@ resources:
     - repository: common
       type: github
       name: NHSDigital/api-management-utils
-      ref: refs/pull/342/merge
+      ref: refs/heads/master
       endpoint: NHSDigital
 
 variables:
