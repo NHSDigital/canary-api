@@ -42,3 +42,4 @@ extends:
       - template: templates/e2e.yml
         parameters:
           test_type: smoketest
+
