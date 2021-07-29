@@ -26,6 +26,9 @@
                     <Name>KeyValueMapOperations.GetSharedSecureVariables</Name>
                 </Step>
                 <Step>
+                    <Name>RaiseFault.503ServiceUnavailable</Name>
+                </Step>
+                <Step>
                     <Condition>private.apigee.status-endpoint-api-key NotEquals request.header.apikey</Condition>
                     <Name>RaiseFault.401Unauthorized</Name>
                 </Step>
