@@ -1,12 +1,12 @@
 <TargetEndpoint name="target">
   <PreFlow>
     <Request>
-      <Step>
-        <Name>Quota</Name>
-      </Step>
-      <Step>
-        <Name>SpikeArrest</Name>
-      </Step>
+      <!-- <Step> -->
+      <!--   <Name>Quota</Name> -->
+      <!-- </Step> -->
+      <!-- <Step> -->
+      <!--   <Name>SpikeArrest</Name> -->
+      <!-- </Step> -->
     </Request>
   </PreFlow>
   <HTTPTargetConnection>
