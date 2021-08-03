@@ -4,7 +4,7 @@ jobs:
   link-ticket:
     runs-on: ubuntu-latest
     steps:
-      - uses: NHSDigital/ticket-check-action
+      - uses: NHSDigital/ticket-check-action@master
         id: ticket-check
 
       - name: Comment on PR with link to JIRA ticket
