@@ -23,7 +23,7 @@ resources:
 pool:
   name: 'AWS-ECS'
 
-# Comment to trigger deploy 5 - REMOVE when finished
+# Comment to trigger deploy 6 - REMOVE when finished
 
 variables:
   - template: project.yml
