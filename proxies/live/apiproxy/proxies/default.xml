@@ -7,23 +7,38 @@
           <Name>OAuthV2.VerifyAccessToken</Name>
         </Step>
         <Step>
-          <Name>Javascript.SetQuotaVars</Name>
-        </Step>
-        <Step>
-          <Name>QuotaPerApp</Name>
-          <Condition>(app_quota_disabled = false)</Condition>
-        </Step>
-        <Step>
-          <Name>QuotaPerProxy</Name>
-          <Condition>(proxy_quota_disabled = false)</Condition>
+          <Name>FlowCallout.ApplyRateLimiting</Name>
         </Step>
       </Request>
       <Response>
+        <Step>
+          <Name>AssignMessage.Status200</Name>
+        </Step>
         <Step>
           <Name>AssignMessage.QuotaData</Name>
         </Step>
       </Response>
       <Condition>(proxy.pathsuffix MatchesPath "/_quota") and (request.verb = "GET")</Condition>
+    </Flow>
+    <Flow name="ReturnQuotaData2">
+      <Description/>
+      <Request>
+        <Step>
+          <Name>VerifyApiKeyQueryParam</Name>
+        </Step>
+        <Step>
+          <Name>FlowCallout.ApplyRateLimitingApiKey</Name>
+        </Step>
+      </Request>
+      <Response>
+        <Step>
+          <Name>AssignMessage.Status200</Name>
+        </Step>
+        <Step>
+          <Name>AssignMessage.QuotaData</Name>
+        </Step>
+      </Response>
+      <Condition>(proxy.pathsuffix MatchesPath "/_quota2") and (request.verb = "GET")</Condition>
     </Flow>
     <Flow name="OptionsPreFlight">
       <Request/>
@@ -69,6 +84,14 @@
       <Condition>(not (proxy.pathsuffix MatchesPath "/_status")) </Condition>
     </Flow>
   </Flows>
+  <FaultRules>
+    <FaultRule name="quota_per_app_exceeded">
+      <Step>
+        <Name>AssignMessage.QuotaData</Name>
+      </Step>
+      <Condition>(ratelimit.QuotaPerApp.failed = true) or (ratelimit.QuotaPerProxy.failed = true)</Condition>
+    </FaultRule>
+  </FaultRules>  
   <PreFlow/>
   <HTTPProxyConnection>
     <BasePath>{{ SERVICE_BASE_PATH }}</BasePath>
@@ -93,18 +116,4 @@
   <RouteRule name="NoRouteQuota">
     <Condition>(proxy.pathsuffix MatchesPath "/_quota") and (request.verb = "GET")</Condition>
   </RouteRule>
-  <FaultRules>
-    <FaultRule name="quota_per_app_exceeded">
-      <Step>
-        <Name>AssignMessage.QuotaPerAppErrorMessage</Name>
-      </Step>
-      <Condition>ratelimit.QuotaPerApp.failed = true</Condition>
-    </FaultRule>
-    <FaultRule name="quota_per_proxy_exceeded">
-      <Step>
-        <Name>AssignMessage.QuotaPerProxyErrorMessage</Name>
-      </Step>
-      <Condition>ratelimit.QuotaPerProxy.failed = true</Condition>
-    </FaultRule>
-  </FaultRules>
 </ProxyEndpoint>
