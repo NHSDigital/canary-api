@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage continueOnError="false" enabled="true" name="AssignMessage.Status200" async="false">
+  <Set>
+    <StatusCode>200</StatusCode>
+  </Set>
+  <AssignTo createNew="false" transport="http" type="request"/>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</AssignMessage>

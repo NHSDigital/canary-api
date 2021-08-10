@@ -10,7 +10,35 @@
           <Name>FlowCallout.ApplyRateLimiting</Name>
         </Step>
       </Request>
+      <Response>
+        <Step>
+          <Name>AssignMessage.Status200</Name>
+        </Step>
+        <Step>
+          <Name>AssignMessage.QuotaData</Name>
+        </Step>
+      </Response>
       <Condition>(proxy.pathsuffix MatchesPath "/_quota") and (request.verb = "GET")</Condition>
+    </Flow>
+    <Flow name="ReturnQuotaData2">
+      <Description/>
+      <Request>
+        <Step>
+          <Name>VerifyApiKeyQueryParam</Name>
+        </Step>
+        <Step>
+          <Name>FlowCallout.ApplyRateLimitingApiKey</Name>
+        </Step>
+      </Request>
+      <Response>
+        <Step>
+          <Name>AssignMessage.Status200</Name>
+        </Step>
+        <Step>
+          <Name>AssignMessage.QuotaData</Name>
+        </Step>
+      </Response>
+      <Condition>(proxy.pathsuffix MatchesPath "/_quota2") and (request.verb = "GET")</Condition>
     </Flow>
     <Flow name="OptionsPreFlight">
       <Request/>
@@ -56,6 +84,14 @@
       <Condition>(not (proxy.pathsuffix MatchesPath "/_status")) </Condition>
     </Flow>
   </Flows>
+  <FaultRules>
+    <FaultRule name="quota_per_app_exceeded">
+      <Step>
+        <Name>AssignMessage.QuotaData</Name>
+      </Step>
+      <Condition>(ratelimit.QuotaPerApp.failed = true) or (ratelimit.QuotaPerProxy.failed = true)</Condition>
+    </FaultRule>
+  </FaultRules>  
   <PreFlow/>
   <HTTPProxyConnection>
     <BasePath>{{ SERVICE_BASE_PATH }}</BasePath>
