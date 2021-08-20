@@ -89,7 +89,7 @@
       <Step>
         <Name>AssignMessage.QuotaData</Name>
       </Step>
-      <Condition>(ratelimit.QuotaPerApp.failed = true) or (ratelimit.QuotaPerProxy.failed = true)</Condition>
+      <Condition>(ratelimit.QuotaPerApp.failed = true) or (ratelimit.QuotaPerProxy.failed = true) or (ratelimit.SpikeArrestPerApp.failed = true) or (ratelimit.SpikeArrestPerProxy = true)</Condition>
     </FaultRule>
   </FaultRules>  
   <PreFlow/>
