@@ -4,10 +4,7 @@
       <Description/>
       <Request>
         <Step>
-          <Name>OAuthV2.VerifyAccessToken</Name>
-        </Step>
-        <Step>
-          <Name>FlowCallout.ApplyRateLimiting</Name>
+          <Name>FlowCallout.AuthenticateAndRateLimit</Name>
         </Step>
       </Request>
       <Response>
@@ -24,10 +21,7 @@
       <Description/>
       <Request>
         <Step>
-          <Name>VerifyApiKeyQueryParam</Name>
-        </Step>
-        <Step>
-          <Name>FlowCallout.ApplyRateLimitingApiKey</Name>
+          <Name>FlowCallout.AuthenticateAndRateLimitApiKeyQueryParam</Name>
         </Step>
       </Request>
       <Response>
@@ -77,7 +71,7 @@
       <Description/>
       <Request>
         <Step>
-          <Name>OAuthV2.VerifyAccessToken</Name>
+          <Name>FlowCallout.AuthenticateAndRateLimit</Name>
         </Step>
       </Request>
       <Response/>
