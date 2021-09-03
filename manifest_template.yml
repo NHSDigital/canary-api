@@ -40,6 +40,14 @@ apigee:
             value: public
           - name: ratelimit
             value: 5ps
+          - name: ratelimiting
+            value:
+              {{ NAME }}:
+                quota:
+                  enabled: false
+                spikeArrest:
+                  enabled: true
+                  ratelimit: 300000pm
         description: {{ DESCRIPTION }}
         displayName: {{ TITLE }}
         environments: [ {{ ENV.name }} ]
