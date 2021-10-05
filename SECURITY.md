@@ -17,7 +17,7 @@ reproduce it.
 
 You can reach us at:
 * cybersecurity@nhs.net
-* carecert@nhsdigital.nhs.uk
+* api.management@nhs.net
 
 ### HackerOne
 If you are registered with HackerOne and have been admitted to the NHS
@@ -35,6 +35,4 @@ We also accept bug reports via OpenBugBounty: https://www.openbugbounty.org/
 
 ## General Security Enquiries
 If you have general enquiries regarding our cyber security, please reach out
-to us at the following addresses:
-* cybersecurity@nhs.net
-* carecert@nhsdigital.nhs.uk
+to us at cybersecurity@nhs.net
