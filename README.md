@@ -1,4 +1,4 @@
-# Canary API
+# Canary API but better
 
 ![Build](https://github.com/NHSDigital/canary-api/workflows/Build/badge.svg?branch=master)
 
