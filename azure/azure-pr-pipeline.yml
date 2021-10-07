@@ -8,7 +8,7 @@ resources:
     - repository: common
       type: github
       name: NHSDigital/api-management-utils
-      ref: refs/heads/master
+      ref: refs/heads/apm-2530-fic-apidoc-pr-names
       endpoint: NHSDigital
   pipelines:
   - pipeline: build_pipeline
@@ -36,6 +36,9 @@ extends:
     product_description: ${{ variables.product_description }}
     spec_file: ${{ variables.spec_file }}
     deploy_review_sandbox: false
+    apigee_deployments:
+      - environment: internal-dev
+        make_spec_visible: true
     post_deploy:
       - template: templates/e2e.yml
         parameters:
