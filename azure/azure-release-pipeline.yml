@@ -39,6 +39,7 @@ extends:
           test_type: smoketest
     apigee_deployments:
       - environment: internal-dev
+        make_spec_visible: true
       - environment: internal-dev-sandbox
       - environment: internal-qa
       - environment: internal-qa-sandbox

@@ -61,6 +61,6 @@ apigee:
         description: {{ DESCRIPTION }}
         requireCallbackUrl: false
         title: {{ TITLE }}
-        visibility: false
+        visibility: true
         specId: {{ NAME }}
 {% endfor %}
