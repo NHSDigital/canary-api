@@ -1,5 +1,5 @@
 # This is an OpenAPI Specification (https://swagger.io/specification/)
-# for the Hello World API
+# which is a copy of the Hello World API spec simply for testing releases to production
 # owned by NHS Digital (https://digital.nhs.uk/)
 openapi: "3.0.0"
 
