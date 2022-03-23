@@ -17,44 +17,44 @@ jobs:
         with:
           python-version: 3.8
 
-      - name: Update apt repositories
-        run: sudo apt update
+      # - name: Update apt repositories
+      #   run: sudo apt update
 
-      - name: Install Java and Node
-        run: sudo apt-get install --yes default-jre default-jdk nodejs
+      # - name: Install Java and Node
+      #   run: sudo apt-get install --yes default-jre default-jdk nodejs
 
-      - name: Upgrade python packaging tools
-        run: python -m pip install --upgrade pip setuptools wheel
+      # - name: Upgrade python packaging tools
+      #   run: python -m pip install --upgrade pip setuptools wheel
 
       - name: Install poetry
         run: pip install poetry
 
-      - name: Cache poetry packages
-        uses: actions/cache@v1
-        with:
-          path: ~/.cache/pypoetry
-          key: ${{ runner.os }}-build-cache-poetry-packages-${{ hashFiles('**/poetry.lock') }}
+      # - name: Cache poetry packages
+      #   uses: actions/cache@v1
+      #   with:
+      #     path: ~/.cache/pypoetry
+      #     key: ${{ runner.os }}-build-cache-poetry-packages-${{ hashFiles('**/poetry.lock') }}
 
-      - name: Cache node modules
-        uses: actions/cache@v1
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-cache-npm-packages-${{ hashFiles('**/package-lock.json') }}
+      # - name: Cache node modules
+      #   uses: actions/cache@v1
+      #   with:
+      #     path: ~/.npm
+      #     key: ${{ runner.os }}-build-cache-npm-packages-${{ hashFiles('**/package-lock.json') }}
 
-      - name: Install repo
-        run: make install
+      # - name: Install repo
+      #   run: make install
 
-      - name: Check licenses
-        run: make check-licenses
+      # - name: Check licenses
+      #   run: make check-licenses
 
-      - name: Lint
-        run: make lint
+      # - name: Lint
+      #   run: make lint
 
-      - name: Compile spec
-        run: make publish
+      # - name: Compile spec
+      #   run: make publish
 
-      - name: Generate release
-        run: make release
+      # - name: Generate release
+      #   run: make release
 
       - name: Set SPEC_VERSION env var
         run: echo ::set-env name=SPEC_VERSION::$(poetry run python scripts/calculate_version.py)
