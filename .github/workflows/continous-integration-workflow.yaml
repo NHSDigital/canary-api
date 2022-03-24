@@ -3,7 +3,7 @@ on: push
 
 jobs:
   create_release:
-    name: build
+    name: on-merge
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
