@@ -1,11 +1,16 @@
 name: Create Release
-on: push
+# on: push
+on:
+  pull_request:
+    types:
+      - closed
 
 jobs:
   create_release:
     name: on-merge
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    # if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
