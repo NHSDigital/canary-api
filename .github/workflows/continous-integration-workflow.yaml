@@ -1,5 +1,4 @@
-name: "Create Release"
-
+name: Create Release
 # on: push
 on:
   pull_request:
@@ -8,7 +7,7 @@ on:
     types: [closed]
 
 jobs:
-  build:
+  create_release:
     name: build
     runs-on: ubuntu-latest
     steps:
