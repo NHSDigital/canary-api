@@ -17,7 +17,7 @@ resources:
     - repository: common
       type: github
       name: NHSDigital/api-management-utils
-      ref: refs/heads/master
+      ref: refs/heads/apm-1856-test-new-apigee-account
       endpoint: NHSDigital
 
 variables:
