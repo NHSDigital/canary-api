@@ -8,7 +8,7 @@ resources:
     - repository: common
       type: github
       name: NHSDigital/api-management-utils
-      ref: refs/heads/APM-2321-add-producer-manual-approval-for-prod
+      ref: refs/heads/master
       endpoint: NHSDigital
   pipelines:
   - pipeline: build_pipeline
@@ -30,13 +30,12 @@ extends:
     service_name: ${{ variables.service_name }}
     short_service_name: ${{ variables.short_service_name }}
     service_base_path: ${{ variables.service_base_path }}
+    prod_producer_approval: true
     post_deploy:
       - template: templates/e2e.yml
         parameters:
           test_type: smoketest
     apigee_deployments:
-      - environment: manual-approval
-        stage_name: manual_approval_internal_dev
       - environment: internal-dev
       - environment: internal-dev-sandbox
       - environment: internal-qa
