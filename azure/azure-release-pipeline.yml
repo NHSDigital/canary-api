@@ -44,4 +44,3 @@ extends:
       - environment: int
       - environment: ref
       - environment: prod
-
