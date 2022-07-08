@@ -30,8 +30,6 @@ extends:
     service_name: ${{ variables.service_name }}
     short_service_name: ${{ variables.short_service_name }}
     service_base_path: ${{ variables.service_base_path }}
-    prod_producer_approval: true
-    manual_approval_env: manual-approval-ptl
     post_deploy:
       - template: templates/e2e.yml
         parameters:
@@ -40,8 +38,6 @@ extends:
       - environment: manual-approval
         stage_name: manual_approval_internal_dev
       - environment: internal-dev
-        depends_on:
-          - manual_approval_internal_dev
       - environment: internal-dev-sandbox
       - environment: internal-qa
       - environment: internal-qa-sandbox
@@ -50,4 +46,3 @@ extends:
       - environment: int
       - environment: ref
       - environment: prod
-
