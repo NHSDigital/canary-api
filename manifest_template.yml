@@ -2,14 +2,17 @@ DESCRIPTION: The Canary API is used for testing internal processes for API Manag
 APIGEE_ENVIRONMENTS:
   - name: internal-dev
     display_name: Internal Development
+    has_mock_auth: true
   - name: internal-dev-sandbox
     display_name: Internal Development Sandbox
   - name: internal-qa
     display_name: Internal QA
+    has_mock_auth: true
   - name: internal-qa-sandbox
     display_name: Internal QA Sandbox
   - name: ref
     display_name: Reference
+    has_mock_auth: true
   - name: dev
     display_name: Development
   - name: sandbox
@@ -46,6 +49,9 @@ apigee:
         proxies:
           - canary-api-{{ ENV.name }}
           - identity-service-{{ ENV.name }}
+{% if ENV.has_mock_auth | default(false) %}
+          - identity-service-mock-{{ ENV.name }}
+{% endif %}
         scopes:
           - 'urn:nhsd:apim:app:level3:canary-api'
           - 'urn:nhsd:apim:user-nhs-id:aal3:canary-api'
