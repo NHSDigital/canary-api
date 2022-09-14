@@ -55,6 +55,7 @@ apigee:
         scopes:
           - 'urn:nhsd:apim:app:level3:canary-api'
           - 'urn:nhsd:apim:user-nhs-id:aal3:canary-api'
+          - 'urn:nhsd:apim:user-nhs-login:P9:canary-api'
         quota: '300'
         quotaInterval: '1'
         quotaTimeUnit: minute
