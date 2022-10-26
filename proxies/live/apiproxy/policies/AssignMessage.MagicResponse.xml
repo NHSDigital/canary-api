@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage continueOnError="false" enabled="true" name="AssignMessage.MagicResponse" async="false">
+  <Set>
+    <StatusCode>200</StatusCode>
+    <Payload contentType="application/json">
+      {"magic":"happening"}
+    </Payload>
+  </Set>
+  <AssignTo createNew="false" transport="http" type="request"/>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</AssignMessage>
