@@ -89,7 +89,7 @@
       </Request>
       <Response>
         <Step>
-          <Name>AssignMessage.Status200</Name>
+          <Name>AssignMessage.MagicResponse</Name>
         </Step>
       </Response>
       <Condition>(proxy.pathsuffix MatchesPath "/proxygen-external-target-apikey-test-endpoint") and ((request.verb = "GET") or (request.verb = "HEAD"))</Condition>
