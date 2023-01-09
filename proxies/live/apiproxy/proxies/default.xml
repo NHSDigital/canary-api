@@ -121,7 +121,7 @@
   <PostClientFlow name="PostClientFlow">
     <Response>
       <Step>
-        <Name>FlowCallout.LogToSplunk</Name>
+        <Name>FlowCallout.TestLogToSplunkFA</Name>
       </Step>
     </Response>
   </PostClientFlow>
