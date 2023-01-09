@@ -4,10 +4,7 @@
       <Description/>
       <Request>
         <Step>
-          <Name>OAuthV2.VerifyAccessToken</Name>
-        </Step>
-        <Step>
-          <Name>FlowCallout.ApplyRateLimiting</Name>
+          <Name>FlowCallout.AuthenticateAndRateLimit</Name>
         </Step>
       </Request>
       <Response>
@@ -24,10 +21,7 @@
       <Description/>
       <Request>
         <Step>
-          <Name>VerifyApiKeyQueryParam</Name>
-        </Step>
-        <Step>
-          <Name>FlowCallout.ApplyRateLimitingApiKey</Name>
+          <Name>FlowCallout.AuthenticateAndRateLimitApiKeyQueryParam</Name>
         </Step>
       </Request>
       <Response>
@@ -98,7 +92,7 @@
       <Description/>
       <Request>
         <Step>
-          <Name>OAuthV2.VerifyAccessToken</Name>
+          <Name>FlowCallout.AuthenticateAndRateLimit</Name>
         </Step>
       </Request>
       <Response/>
@@ -110,7 +104,7 @@
       <Step>
         <Name>AssignMessage.QuotaData</Name>
       </Step>
-      <Condition>(ratelimit.QuotaPerApp.failed = true) or (ratelimit.QuotaPerProxy.failed = true)</Condition>
+      <Condition>(ratelimit.QuotaPerApp.failed = true) or (ratelimit.QuotaPerProxy.failed = true) or (ratelimit.SpikeArrestPerApp.failed = true) or (ratelimit.SpikeArrestPerProxy = true)</Condition>
     </FaultRule>
   </FaultRules>  
   <PreFlow/>
