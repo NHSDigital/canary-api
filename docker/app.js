@@ -17,5 +17,6 @@ app.get('/tweet', (req, res) => { res.send({"msg": "tweet tweet"}) });
 app.get('/_health', (req, res) => { ping_handler(req, res) });
 app.get('/_status', (req, res) => { ping_handler(req, res) });
 app.get('/_ping', (req, res) => { ping_handler(req, res) });
+app.post('/chirp', (req, res) => { res.send(req.body) });
 
 module.exports = app;
