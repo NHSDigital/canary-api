@@ -52,6 +52,9 @@ apigee:
 {% if ENV.has_mock_auth | default(false) %}
           - identity-service-mock-{{ ENV.name }}
 {% endif %}
+{% if ENV.name == 'dev' %}
+          - identity-service-dep-{{ ENV.name }}
+{% endif %}
         scopes:
           - 'urn:nhsd:apim:app:level3:canary-api'
           - 'urn:nhsd:apim:user-nhs-id:aal3:canary-api'
