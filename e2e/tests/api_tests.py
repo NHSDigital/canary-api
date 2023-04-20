@@ -1,5 +1,6 @@
 import pytest
 import os
+import uuid
 from aiohttp import ClientResponse
 from api_test_utils import env
 from api_test_utils import poll_until
@@ -11,15 +12,22 @@ from api_test_utils.api_test_session_config import APITestSessionConfig
 @pytest.mark.asyncio
 async def test_wait_for_ping(api_client: APISessionClient, api_test_config: APITestSessionConfig):
 
+    test_header_key = 'x-test-uuid'
+    test_header_value = uuid.uuid4()
+
     async def _is_complete(resp: ClientResponse):
 
         if resp.status != 200:
             return False
         body = await resp.json()
-        return body.get("commitId") == api_test_config.commit_id
+        return body.get("commitId") == api_test_config.commit_id and body.get('_reqHeaders',{}).get('test_header_key') == test_header_value
+
+    headers = {
+        test_header_key: test_header_value
+    }
 
     await poll_until(
-        make_request=lambda: api_client.get('_ping'),
+        make_request=lambda: api_client.get('_ping', headers=headers),
         until=_is_complete,
         timeout=60
     )
