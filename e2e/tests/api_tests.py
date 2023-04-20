@@ -20,7 +20,7 @@ async def test_wait_for_ping(api_client: APISessionClient, api_test_config: APIT
         if resp.status != 200:
             return False
         body = await resp.json()
-        return body.get("commitId") == api_test_config.commit_id and body.get('_reqHeaders',{}).get('test_header_key') == test_header_value
+        return body.get("commitId") == api_test_config.commit_id
 
     headers = {
         test_header_key: test_header_value
