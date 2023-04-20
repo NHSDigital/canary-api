@@ -13,7 +13,7 @@ from api_test_utils.api_test_session_config import APITestSessionConfig
 async def test_wait_for_ping(api_client: APISessionClient, api_test_config: APITestSessionConfig):
 
     test_header_key = 'x-test-uuid'
-    test_header_value = uuid.uuid4()
+    test_header_value = str(uuid.uuid4())
 
     async def _is_complete(resp: ClientResponse):
 
