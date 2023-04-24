@@ -12,7 +12,7 @@ from api_test_utils.api_test_session_config import APITestSessionConfig
 @pytest.mark.asyncio
 async def test_wait_for_ping(api_client: APISessionClient, api_test_config: APITestSessionConfig):
 
-    test_header_key = 'x-test-uuid'
+    test_header_key = 'X-Test-UUID'
     test_header_value = str(uuid.uuid4())
 
     async def _is_complete(resp: ClientResponse):
