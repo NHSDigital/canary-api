@@ -11,6 +11,3 @@ scripts/__pycache__/
 env
 **/__pycache__
 .dir-locals.el
-.vscode
-reports/smoketest.xml
-*/.coverage

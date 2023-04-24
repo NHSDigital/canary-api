@@ -8,6 +8,7 @@ function ping_handler(req, res) {
         ping: "pong",
         status: "pass",
         service: "canary",
+        _version: version_info
     });
 }
 
