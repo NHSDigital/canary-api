@@ -1,15 +1,18 @@
 import pytest
 import os
+import uuid
 from aiohttp import ClientResponse
 from api_test_utils import env
 from api_test_utils import poll_until
 from api_test_utils.api_session_client import APISessionClient
 from api_test_utils.api_test_session_config import APITestSessionConfig
 
-
 @pytest.mark.smoketest
 @pytest.mark.asyncio
 async def test_wait_for_ping(api_client: APISessionClient, api_test_config: APITestSessionConfig):
+
+    test_header_name = "X-APIM-TestPayload"
+    test_header_value = str(uuid.uuid4())
 
     async def _is_complete(resp: ClientResponse):
 
@@ -17,9 +20,15 @@ async def test_wait_for_ping(api_client: APISessionClient, api_test_config: APIT
             return False
         body = await resp.json()
         return body.get("commitId") == api_test_config.commit_id
+        # return body.get("commitId") == api_test_config.commit_id and body.get('requestHeaders', {}).get(test_header_name) == test_header_value
 
     await poll_until(
-        make_request=lambda: api_client.get('_ping'),
+        make_request=lambda: api_client.get(
+            '_ping',
+            headers={
+                test_header_name: test_header_value
+            }
+        ),
         until=_is_complete,
         timeout=60
     )
