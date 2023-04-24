@@ -52,7 +52,9 @@
     <Flow name="AddPayloadToPing">
       <Description/>
       <Request>
-        <Name>JavaScriptCaptureRequestHeaders</Name>
+        <Step>
+          <Name>JavaScriptCaptureRequestHeaders</Name>
+        </Step>
       </Request>
       <Response>
         <Step>
