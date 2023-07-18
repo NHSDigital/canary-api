@@ -1,6 +1,6 @@
 variables:
   service_name: canary-api
-  short_service_name: canaryyyyyy
+  short_service_name: canaryyyyy
   service_base_path: canary-api
   product_display_name: Canary API
   product_description: The Canary API is used for testing internal processes for API Management releases
