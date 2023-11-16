@@ -68,7 +68,7 @@ apigee:
         quotaInterval: '1'
         quotaTimeUnit: minute
 {% if ENV.name == 'int' %}
-      - name: {{ NAME }}-apm-4807
+      - name: {{ NAME }}-temp
         approvalType: auto
         attributes:
           - name: access
