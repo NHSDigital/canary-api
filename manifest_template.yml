@@ -45,7 +45,7 @@ apigee:
         approvalType: auto
         attributes:
           - name: access
-            value: public
+            value: private
           - name: ratelimit
             value: 5ps
         description: {{ DESCRIPTION }}
