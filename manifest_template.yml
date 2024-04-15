@@ -3,6 +3,7 @@ APIGEE_ENVIRONMENTS:
   - name: internal-dev
     display_name: Internal Development
     has_mock_auth: true
+    product_visibility: private
   - name: internal-dev-sandbox
     display_name: Internal Development Sandbox
     has_mock_auth: true
@@ -45,7 +46,7 @@ apigee:
         approvalType: auto
         attributes:
           - name: access
-            value: public
+            value: {{ ENV.product_visibility | default(public) }}
           - name: ratelimit
             value: 5ps
         description: {{ DESCRIPTION }}
