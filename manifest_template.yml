@@ -46,7 +46,7 @@ apigee:
         approvalType: auto
         attributes:
           - name: access
-            value: {{ ENV.product_visibility | default(public) }}
+            value: {{ ENV.product_visibility | default('public') }}
           - name: ratelimit
             value: 5ps
         description: {{ DESCRIPTION }}
