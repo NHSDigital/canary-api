@@ -79,6 +79,7 @@ Speccy does the lifting for the following npm scripts:
 :bulb: The `publish` command is useful when uploading to Apigee which requires the spec as a single file.
 
 ### Caveats
+No current caveats
 
 #### Swagger UI
 Swagger UI unfortunately doesn't correctly render `$ref`s in examples, so use `speccy serve` instead.
