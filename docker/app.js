@@ -6,7 +6,7 @@ function ping_handler(req, res) {
     let version_info =  JSON.parse(process.env.VERSION_INFO || '{}');
     res.json({
         ping: "pong",
-        status: "pass",
+        status: "pass - testing change",
         service: "canary",
         _version: version_info
     });
