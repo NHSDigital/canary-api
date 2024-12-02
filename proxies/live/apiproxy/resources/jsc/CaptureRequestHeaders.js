@@ -1,0 +1,1 @@
+context.setVariable('requestHeaders', JSON.stringify(context.proxyRequest.headers));
