@@ -12,6 +12,9 @@ pr:
   branches:
     include: ['*']
 
+pool:
+  name: 'AWS-ECS-Test'
+
 resources:
   repositories:
     - repository: common

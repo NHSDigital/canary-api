@@ -21,7 +21,7 @@ resources:
           - refs/tags/v*
 
 pool:
-  name: 'AWS-ECS'
+  name: 'AWS-ECS-Test'
 
 variables:
   - template: project.yml
