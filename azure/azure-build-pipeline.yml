@@ -17,13 +17,13 @@ resources:
     - repository: common
       type: github
       name: NHSDigital/api-management-utils
-      ref: refs/heads/master
+      ref: refs/heads/APM-5855-agent-pool-configurable
       endpoint: NHSDigital
 
 variables:
   - template: project.yml
 extends:
-  template: azure/common/apigee-build.yml@APM-5855-agent-pool-configurable
+  template: azure/common/apigee-build.yml@common
   parameters:
     agent_pool: 'AWS-ECS-Test'
     service_name: ${{ variables.service_name }}
