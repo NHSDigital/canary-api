@@ -12,9 +12,6 @@ pr:
   branches:
     include: ['*']
 
-pool:
-  name: 'AWS-ECS-Test'
-
 resources:
   repositories:
     - repository: common
@@ -26,8 +23,9 @@ resources:
 variables:
   - template: project.yml
 extends:
-  template: azure/common/apigee-build.yml@common
+  template: azure/common/apigee-build.yml@APM-5855-agent-pool-configurable
   parameters:
+    agent_pool: 'AWS-ECS-Test'
     service_name: ${{ variables.service_name }}
     short_service_name: ${{ variables.short_service_name }}
     cache_steps:
