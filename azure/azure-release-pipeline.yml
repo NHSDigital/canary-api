@@ -18,15 +18,13 @@ resources:
         include:
           - refs/tags/v*
 
-pool:
-  name: 'AWS-ECS-Test'
-
 variables:
   - template: project.yml
 
 extends:
   template: azure/common/apigee-deployment.yml@common
   parameters:
+    agent_pool: 'AWS-ECS-Test'
     service_name: ${{ variables.service_name }}
     short_service_name: ${{ variables.short_service_name }}
     service_base_path: ${{ variables.service_base_path }}
