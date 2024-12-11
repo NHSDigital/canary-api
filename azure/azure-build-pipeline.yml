@@ -25,7 +25,7 @@ variables:
 extends:
   template: azure/common/apigee-build.yml@common
   parameters:
-    agent_pool: 'AWS-ECS-Test'
+    agent_pool: 'AWS-ECS'
     service_name: ${{ variables.service_name }}
     short_service_name: ${{ variables.short_service_name }}
     cache_steps:
