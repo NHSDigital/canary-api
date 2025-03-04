@@ -1,7 +1,7 @@
 variables:
   service_name: canary-api
   short_service_name: canary
-  service_base_path: canary-api
+  service_base_path: apm-5953-migration
   product_display_name: Canary API
   product_description: The Canary API is used for testing internal processes for API Management releases
   spec_file: canary-api.json
