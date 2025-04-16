@@ -5,10 +5,20 @@ parameters:
     default: ""
 
 steps:
+    - task: s3-cache-action@1
+      inputs:
+        key: 'poetry | ./poetry.lock'
+        location: '.venv'
+        debug: true
+        workingDirectory: $(SERVICE_DIR)
+      name: poetryCache
+      displayName: cache python dependencies
+
     - bash: |
-        make install-python
+          make install-python
       workingDirectory: $(SERVICE_DIR)
-      displayName: Setup e2e tests
+      condition: ne(variables['poetryCache.cacheRestored'], 'true')
+      displayName: poetry install
 
     - bash: |
         export SOURCE_COMMIT_ID=$(Build.SourceVersion)
