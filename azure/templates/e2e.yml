@@ -6,7 +6,7 @@ parameters:
 
 steps:
     - bash: |
-           make -C e2e install
+        make install-python
       workingDirectory: $(SERVICE_DIR)
       displayName: Setup e2e tests
 
