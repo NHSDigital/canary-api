@@ -15,8 +15,6 @@ steps:
       displayName: cache python dependencies
 
     - bash: |
-        ls
-        pwd
         make install-python
       workingDirectory: $(SERVICE_DIR)
       condition: ne(variables['poetryCache.cacheRestored'], 'true')
