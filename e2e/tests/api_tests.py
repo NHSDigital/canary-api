@@ -53,7 +53,7 @@ def test_wait_for_status(nhsd_apim_proxy_url, status_endpoint_auth_headers, serv
 
     deployed_commit_id = version_info.get("commitId")
 
-    while deployed_commit_id != getenv("SOURCE_COMMIT_ID") and retries <= 30:
+    while deployed_commit_id != getenv("SOURCE_COMMIT_ID") and retries <= 45:
         resp = requests.get(
             f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers, timeout=30
         )
@@ -62,7 +62,7 @@ def test_wait_for_status(nhsd_apim_proxy_url, status_endpoint_auth_headers, serv
         retries += 1
         sleep(1)
 
-    if retries >= 30:
+    if retries >= 45:
         pytest.fail("Timeout Error - max retries")
 
     assert resp.status_code == 200
