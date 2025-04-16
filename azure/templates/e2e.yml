@@ -3,15 +3,16 @@ parameters:
 
 steps:
     - bash: |
-          make -C e2e install
+          make install-python
       workingDirectory: $(SERVICE_DIR)
       displayName: Setup e2e tests
 
     - bash: |
-        export RELEASE_RELEASEID=$(Build.BuildId)
         export SOURCE_COMMIT_ID=$(Build.SourceVersion)
-        export APIGEE_ENVIRONMENT="$(APIGEE_ENVIRONMENT)"
-        export SERVICE_BASE_PATH="$(SERVICE_BASE_PATH)"
+        export PROXY_NAME="$(FULLY_QUALIFIED_SERVICE_NAME)"
+        export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"
+        export APIGEE_ORGANIZATION="nhsd-$(APIGEE_ORGANIZATION)"
+        export APIGEE_APP_ID=${{ parameters.app_id }}
         export STATUS_ENDPOINT_API_KEY="$(status-endpoint-api-key)"
         make -C e2e ${{ parameters.test_type }}
 

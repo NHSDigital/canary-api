@@ -29,17 +29,64 @@ extends:
     short_service_name: ${{ variables.short_service_name }}
     service_base_path: ${{ variables.service_base_path }}
     prod_producer_approval: true
-    post_deploy:
-      - template: templates/e2e.yml
-        parameters:
-          test_type: smoketest
+    python_version: ${{ variables.python_version }}
     apigee_deployments:
       - environment: internal-dev
+        post_deploy:
+          - template: templates/e2e.yml
+            parameters:
+              test_type: smoketest
       - environment: internal-dev-sandbox
+        post_deploy:
+          - template: templates/e2e.yml
+            parameters:
+              test_type: smoketest
       - environment: internal-qa
+        post_deploy:
+          - template: templates/e2e.yml
+            parameters:
+              test_type: smoketest
       - environment: internal-qa-sandbox
-      - environment: sandbox
-      - environment: dev
-      - environment: int
+        post_deploy:
+          - template: templates/e2e.yml
+            parameters:
+              test_type: smoketest
       - environment: ref
+        post_deploy:
+          - template: templates/e2e.yml
+            parameters:
+              test_type: smoketest
+        depends_on:
+          - internal_qa
+      - environment: dev
+        post_deploy:
+          - template: templates/e2e.yml
+            parameters:
+              test_type: smoketest
+              app_id: "7af455b3-e2b8-4c73-bb20-3d044cd2cc25"
+        depends_on:
+          - internal_qa
+      - environment: int
+        post_deploy:
+          - template: templates/e2e.yml
+            parameters:
+              app_id: "f636ac69-6906-4b30-96cf-a21b316a207e"
+              test_type: smoketest
+        depends_on:
+          - internal_qa
+      - environment: sandbox
+        post_deploy:
+          - template: templates/e2e.yml
+            parameters:
+              app_id: "44900ab5-7b6c-4dbe-8d1b-0ed4850b0e76"
+              test_type: smoketest
+        depends_on:
+          - internal_qa
       - environment: prod
+        post_deploy:
+          - template: templates/e2e.yml
+            parameters:
+              app_id: "0fb7e1b5-14cc-48cf-993e-06b27d7cb2da"
+              test_type: smoketest
+        depends_on:
+          - int

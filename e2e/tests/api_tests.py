@@ -1,66 +1,72 @@
+from os import getenv
+from time import sleep
+
 import pytest
-import os
-from aiohttp import ClientResponse
-from api_test_utils import env
-from api_test_utils import poll_until
-from api_test_utils.api_session_client import APISessionClient
-from api_test_utils.api_test_session_config import APITestSessionConfig
+import requests
 
 
 @pytest.mark.smoketest
-@pytest.mark.asyncio
-async def test_wait_for_ping(api_client: APISessionClient, api_test_config: APITestSessionConfig):
+def test_wait_for_ping(nhsd_apim_proxy_url):
+    retries = 0
+    resp = requests.get(f"{nhsd_apim_proxy_url}/_ping", timeout=30)
+    deployed_commit_id = resp.json().get("commitId")
 
-    async def _is_complete(resp: ClientResponse):
+    while deployed_commit_id != getenv("SOURCE_COMMIT_ID") and retries <= 30:
+        resp = requests.get(f"{nhsd_apim_proxy_url}/_ping", timeout=30)
 
-        if resp.status != 200:
-            return False
-        body = await resp.json()
-        return body.get("commitId") == api_test_config.commit_id
+        if resp.status_code != 200:
+            pytest.fail(f"Status code {resp.status_code}, expecting 200")
 
-    await poll_until(
-        make_request=lambda: api_client.get('_ping'),
-        until=_is_complete,
-        timeout=60
+        deployed_commit_id = resp.json().get("commitId")
+        retries += 1
+        sleep(1)
+
+    if retries >= 30:
+        pytest.fail("Timeout Error - max retries")
+
+    assert deployed_commit_id == getenv("SOURCE_COMMIT_ID")
+
+
+@pytest.mark.smoketest
+def test_check_status_is_secured(nhsd_apim_proxy_url):
+    resp = requests.get(f"{nhsd_apim_proxy_url}/_status")
+    assert resp.status_code == 401
+
+
+@pytest.mark.smoketest
+@pytest.mark.parametrize("service_header", ["", "another-service"])
+def test_wait_for_status(nhsd_apim_proxy_url, status_endpoint_auth_headers, service_header):
+    retries = 0
+    headers = status_endpoint_auth_headers
+    if service_header:
+        headers["x-apim-service"] = service_header
+    resp = requests.get(
+        f"{nhsd_apim_proxy_url}/_status", headers=headers, timeout=30
     )
 
+    if resp.status_code != 200:
+        # Status should always be 200 we don't need to wait for it
+        pytest.fail(f"Status code {resp.status_code}, expecting 200")
+    version_info = resp.json().get('_version')
+    if not version_info:
+        pytest.fail("_version not found")
 
-@pytest.mark.smoketest
-@pytest.mark.asyncio
-async def test_check_status_is_secured(api_client: APISessionClient):
+    deployed_commit_id = version_info.get("commitId")
 
-    async with api_client.get("_status", allow_retries=True) as resp:
-        assert resp.status == 401
+    while deployed_commit_id != getenv("SOURCE_COMMIT_ID") and retries <= 30:
+        resp = requests.get(
+            f"{nhsd_apim_proxy_url}/_status", headers=status_endpoint_auth_headers, timeout=30
+        )
 
+        deployed_commit_id = resp.json().get('_version', {}).get("commitId")
+        retries += 1
+        sleep(1)
 
-@pytest.mark.smoketest
-@pytest.mark.asyncio
-async def test_wait_for_status(api_client: APISessionClient, api_test_config: APITestSessionConfig):
+    if retries >= 30:
+        pytest.fail("Timeout Error - max retries")
 
-    async def _is_complete(resp: ClientResponse):
-        if resp.status != 200:
-            return False
-        body = await resp.json()
-        version_info = body.get('_version')
-        if not version_info:
-            return False
-
-        return version_info.get("commitId") == api_test_config.commit_id
-
-    await poll_until(
-        make_request=lambda: api_client.get('_status', headers={"apikey": env.status_endpoint_api_key()}),
-        until=_is_complete,
-        timeout=60
-    )
-
-
-@pytest.mark.smoketest
-@pytest.mark.asyncio
-async def test_api_status_with_service_header_another_service(api_client: APISessionClient):
-
-    resp = await api_client.get("_status", allow_retries=True, max_retries=5, headers={'x-apim-service': 'another-service', "apikey": env.status_endpoint_api_key()})
-    assert resp.status == 200
-    body = await resp.json()
-
-    assert body.get('service') == 'canary'
-
+    assert resp.status_code == 200
+    assert deployed_commit_id == getenv("SOURCE_COMMIT_ID")
+    body = resp.json()
+    assert body.get("status") == "pass"
+    assert body.get("service") == 'canary'
