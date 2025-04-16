@@ -7,17 +7,20 @@ parameters:
 steps:
     - task: s3-cache-action@1
       inputs:
-        key: 'poetry | $(SERVICE_NAME) | $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)/poetry.lock'
-        location: '$(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)/.venv'
+        key: 'poetry | ./poetry.lock'
+        location: '.venv'
         debug: true
-        alias: 'Pytest'
-      displayName: cache pytest dependencies
+        workingDirectory: $(SERVICE_DIR)
+      name: poetryCache
+      displayName: cache python dependencies
 
     - bash: |
+        ls
+        pwd
         make install-python
-      workingDirectory: $(Pipeline.Workspace)/s/$(SERVICE_NAME)/$(SERVICE_ARTIFACT_NAME)
-      condition: ne(variables['CacheRestored-Pytest'], 'true')
-      displayName: Setup pytests
+      workingDirectory: $(SERVICE_DIR)
+      condition: ne(variables['poetryCache.cacheRestored'], 'true')
+      displayName: poetry install
 
     - bash: |
         export SOURCE_COMMIT_ID=$(Build.SourceVersion)
