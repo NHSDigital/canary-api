@@ -1,5 +1,8 @@
 parameters:
   - name: test_type
+  - name: app_id
+    type: string
+    default: ""
 
 steps:
     - bash: |
