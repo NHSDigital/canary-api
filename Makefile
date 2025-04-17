@@ -24,6 +24,7 @@ release: clean publish
 	mkdir -p dist/proxies/live
 	cp -Rv proxies/live/apiproxy dist/proxies/live
 	cp ecs-proxies-deploy.yml dist/ecs-deploy-all.yml
+	cp Makefile pytest.ini poetry.lock poetry.toml pyproject.toml dist
 
 check-licenses:
 	@echo "Not configured"

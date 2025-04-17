@@ -1,17 +1,31 @@
 parameters:
   - name: test_type
+  - name: app_id
+    type: string
+    default: ""
 
 steps:
-    - bash: |
-          make -C e2e install
-      workingDirectory: $(SERVICE_DIR)
-      displayName: Setup e2e tests
+    - task: s3-cache-action@1
+      inputs:
+        key: 'poetry | ./poetry.lock'
+        location: '.venv'
+        debug: true
+        workingDirectory: $(SERVICE_DIR)
+      name: poetryCache
+      displayName: cache python dependencies
 
     - bash: |
-        export RELEASE_RELEASEID=$(Build.BuildId)
+        make install-python
+      workingDirectory: $(SERVICE_DIR)
+      condition: ne(variables['poetryCache.cacheRestored'], 'true')
+      displayName: poetry install
+
+    - bash: |
         export SOURCE_COMMIT_ID=$(Build.SourceVersion)
-        export APIGEE_ENVIRONMENT="$(APIGEE_ENVIRONMENT)"
-        export SERVICE_BASE_PATH="$(SERVICE_BASE_PATH)"
+        export PROXY_NAME="$(FULLY_QUALIFIED_SERVICE_NAME)"
+        export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"
+        export APIGEE_ORGANIZATION="nhsd-$(APIGEE_ORGANIZATION)"
+        export APIGEE_APP_ID=${{ parameters.app_id }}
         export STATUS_ENDPOINT_API_KEY="$(status-endpoint-api-key)"
         make -C e2e ${{ parameters.test_type }}
 
