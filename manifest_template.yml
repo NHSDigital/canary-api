@@ -38,7 +38,7 @@ apigee:
   environments:
 {% for ENV in APIGEE_ENVIRONMENTS %}
 {% set TITLE = 'Canary API (' + ENV.display_name + ' Environment)' %}
-{% set NAME = 'canary-api-' + ('-dep' if ENV.name == 'dev' else '') + ENV.name %}
+{% set NAME = 'canary-api-' + ('dep-' if ENV.name == 'dev' else '') + ENV.name %}
   - name: {{ ENV.name }}
     products:
       - name: {{ NAME }}
