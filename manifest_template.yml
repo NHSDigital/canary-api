@@ -38,7 +38,7 @@ apigee:
   environments:
 {% for ENV in APIGEE_ENVIRONMENTS %}
 {% set TITLE = 'Canary API (' + ENV.display_name + ' Environment)' %}
-{% set NAME = 'canary-api-' + ENV.name %}
+{% set NAME = 'canary-api-' + ('-dep' if ENV.name == 'dev' else '') + ENV.name %}
   - name: {{ ENV.name }}
     products:
       - name: {{ NAME }}
@@ -52,13 +52,10 @@ apigee:
         displayName: {{ TITLE }}
         environments: [ {{ ENV.name }} ]
         proxies:
-          - canary-api-{{ ENV.name }}
-          - identity-service-{{ ENV.name }}
+          - canary-api-{{ ('dep-' if ENV.name == 'dev' else '') + ENV.name  }}
+          - identity-service-{{ ('dep-' if ENV.name == 'dev' else '') + ENV.name }}
 {% if ENV.has_mock_auth | default(false) %}
-          - identity-service-mock-{{ ENV.name }}
-{% endif %}
-{% if ENV.name == 'dev' %}
-          - identity-service-dep-{{ ENV.name }}
+          - identity-service-mock-{{ ('dep-' if ENV.name == 'dev' else '') + ENV.name }}
 {% endif %}
         scopes:
           - 'urn:nhsd:apim:app:level3:canary-api'
