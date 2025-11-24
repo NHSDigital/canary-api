@@ -3,4 +3,4 @@ variables:
   short_service_name: canary
   service_base_path: canary-api
   spec_file: canary-api.json
-  python_version: 3.13.7
+  python_version: 3.13
