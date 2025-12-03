@@ -20,7 +20,6 @@ resources:
           - refs/heads/main
           - refs/tags/v*
 
-
 variables:
   - template: project.yml
 
