@@ -23,7 +23,6 @@ resources:
 variables:
   - template: project.yml
 
-
 extends:
   template: azure/common/apigee-deployment.yml@common
   parameters:
