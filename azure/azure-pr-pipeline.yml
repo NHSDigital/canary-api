@@ -22,7 +22,6 @@ resources:
 
 
 
-
 variables:
   - template: project.yml
 
