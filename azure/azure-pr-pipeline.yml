@@ -21,7 +21,6 @@ resources:
           - refs/tags/v*
 
 
-
 variables:
   - template: project.yml
 
