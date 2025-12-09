@@ -19,18 +19,18 @@ keywords = ["healthcare", "uk", "nhs"]
 
 
 [tool.poetry.dependencies]
-python = "^3.10"
-pyyaml = "^6.0.2"
+python = "^3.13"
+pyyaml = "^6.0.3"
 docopt = "^0.6.2"
 jsonpath-rw = "^1.4.0"
-semver = "^3.0.4"
+semver = "^3.0"
 gitpython = "^3.1.44"
-requests = "^2.32.3"
+requests = "^2.32.5"
 
 
 
-[tool.poetry.group.dev.dependencies]
-flake8 = "^7.2.0"
+[tool.poetry.group.dev.dependencies] 
+flake8 = "^7.3.0"
 black = "^25.1.0"
 pip-licenses = "^5.0.0"
 jinja2 = "^3.1.6"
