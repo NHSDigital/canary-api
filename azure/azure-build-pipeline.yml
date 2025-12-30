@@ -16,7 +16,7 @@ resources:
   repositories:
     - repository: common
       type: github
-      name: NHSDigital/api-management-utils
+      name: NHSDigital/api-management-utils-restored
       ref: refs/heads/master
       endpoint: NHSDigital
 
