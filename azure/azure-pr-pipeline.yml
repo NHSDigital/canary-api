@@ -8,7 +8,7 @@ resources:
     - repository: common
       type: github
       name: NHSDigital/api-management-utils
-      ref: refs/heads/master
+      ref: refs/heads/task-5886New
       endpoint: NHSDigital
   pipelines:
   - pipeline: build_pipeline
@@ -19,7 +19,6 @@ resources:
           - main
           - refs/heads/main
           - refs/tags/v*
-
 
 variables:
   - template: project.yml
