@@ -17,7 +17,7 @@ resources:
     - repository: common
       type: github
       name: NHSDigital/api-management-utils
-      ref: refs/heads/APM-6720-ecr-lifecycle-policy
+      ref: refs/heads/APM-6720-ecr-lifecycle-policies
       endpoint: NHSDigital
 
 variables:
