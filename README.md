@@ -43,7 +43,7 @@ $ make install-hooks
 ### Environment Variables
 Various scripts and commands rely on environment variables being set. These are documented with the commands.
 
-:bulb: Consider using [direnv](https://direnv.net/) to manage your environment variables during development and maintaining your own `.envrc` file - the values of these variables will be specific to you and/or sensitive.
+:bulb: Consider using [direnv](https://direnv.net/) to manage your environment variables during development and maintaining your own `.envrc` file - the values of these variables will be specific to you and/or sensitive. 
 
 ### Make commands
 There are `make` commands that alias some of this functionality:
