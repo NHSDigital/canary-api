@@ -1,28 +1,47 @@
 name: PR Quality Check
 on: pull_request
+
 jobs:
   link-ticket:
     runs-on: ubuntu-latest
     steps:
+      # 1) Validate branch name without shell (no user data in `run`)
       - name: Check ticket name conforms to requirements
-        run: echo ${{ github.event.pull_request.head.ref }} | grep -i -E -q "(apm-[0-9]+)|(amb-[0-9]+)|(dependabot\/)"
+        id: validate
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const ref = context.payload.pull_request.head.ref || '';
+            const ok = /(apm-\d+)|(amb-\d+)|(dependabot\/)/i.test(ref);
+            if (!ok) {
+              core.setFailed(`Branch name "${ref}" must match /(apm-[0-9]+)|(amb-[0-9]+)|(dependabot\\/)/i`);
+            }
 
+      # 2) Safely grab ticket name in JS and expose as an output (no ::set-env, no shell)
       - name: Grab ticket name
         if: contains(github.event.pull_request.head.ref, 'apm-') || contains(github.event.pull_request.head.ref, 'APM-') || contains(github.event.pull_request.head.ref, 'amb-') || contains(github.event.pull_request.head.ref, 'AMB-')
-        run: echo ::set-env name=TICKET_NAME::$(echo ${{ github.event.pull_request.head.ref }} | grep -i -o '\(apm-[0-9]\+\)\|\(amb-[0-9]\+\)' | tr '[:lower:]' '[:upper:]')
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+        id: ticket
+        uses: actions/github-script@v7
+        with:
+          # return the ticket in uppercase; becomes steps.ticket.outputs.result
+          result-encoding: string
+          script: |
+            const ref = context.payload.pull_request.head.ref || '';
+            const match = ref.match(/(apm-\d+)|(amb-\d+)/i);
+            return match ? match[0].toUpperCase() : '';
 
+      # 3) Comment with link to JIRA ticket (uses safe output, not shell)
       - name: Comment on PR with link to JIRA ticket
-        if: contains(github.event.pull_request.head.ref, 'apm-') || contains(github.event.pull_request.head.ref, 'APM-') || contains(github.event.pull_request.head.ref, 'amb-') || contains(github.event.pull_request.head.ref, 'AMB-')
+        if: (contains(github.event.pull_request.head.ref, 'apm-') || contains(github.event.pull_request.head.ref, 'APM-') || contains(github.event.pull_request.head.ref, 'amb-') || contains(github.event.pull_request.head.ref, 'AMB-')) && steps.ticket.outputs.result != ''
         uses: unsplash/comment-on-pr@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           msg: |
             This branch is work on a ticket in the NHS Digital AMB JIRA Project. Here's a handy link to the ticket:
-            # [${{ env.TICKET_NAME }}](https://nhsd-jira.digital.nhs.uk/browse/${{ env.TICKET_NAME}})
-      
+            # [${{ steps.ticket.outputs.result }}](https://nhsd-jira.digital.nhs.uk/browse/${{ steps.ticket.outputs.result }})
+
+      # 4) Comment with link to Spec (still safe—no shell, input-only usage)
       - name: Comment on PR with link to Spec
         if: contains(github.event.pull_request.head.ref, 'apm-') || contains(github.event.pull_request.head.ref, 'APM-') || contains(github.event.pull_request.head.ref, 'apmspii-') || contains(github.event.pull_request.head.ref, 'APMSPII-') || contains(github.event.pull_request.head.ref, 'adz-') || contains(github.event.pull_request.head.ref, 'ADZ-')
         uses: unsplash/comment-on-pr@master
