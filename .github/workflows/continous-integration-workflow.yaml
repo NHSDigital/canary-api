@@ -6,11 +6,12 @@ jobs:
     name: build
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0  # This causes all history to be fetched, which is required for calculate-version to function	
+          fetch-depth: 0
 
       - name: Install Python 3.10
         uses: actions/setup-python@v5
@@ -27,9 +28,7 @@ jobs:
         run: pip install semver
 
       - name: Set SPEC_VERSION env var
-        run: echo ::set-env name=SPEC_VERSION::$(python scripts/calculate_version.py)
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+        run: echo "SPEC_VERSION=$(python scripts/calculate_version.py)" >> $GITHUB_ENV
 
       - name: Create release (main only)
         id: create-release
