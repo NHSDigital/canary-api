@@ -12,7 +12,7 @@
   "homepage": "https://github.com/NHSDigital/canary-api",
   "dependencies": {
     "express": "^4.21.2",
-    "qs": "^6.14.2"
+    "qs": "^6.15.0"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.19.1",
