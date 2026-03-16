@@ -8,7 +8,7 @@ jobs:
       # 1) Validate branch name without shell (no user data in `run`)
       - name: Check ticket name conforms to requirements
         id: validate
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const ref = context.payload.pull_request.head.ref || '';
@@ -21,7 +21,7 @@ jobs:
       - name: Grab ticket name
         if: contains(github.event.pull_request.head.ref, 'apm-') || contains(github.event.pull_request.head.ref, 'APM-') || contains(github.event.pull_request.head.ref, 'amb-') || contains(github.event.pull_request.head.ref, 'AMB-')
         id: ticket
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           # return the ticket in uppercase; becomes steps.ticket.outputs.result
           result-encoding: string
