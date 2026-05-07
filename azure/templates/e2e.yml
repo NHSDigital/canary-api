@@ -25,9 +25,12 @@ steps:
         export PROXY_NAME="$(FULLY_QUALIFIED_SERVICE_NAME)"
         export APIGEE_ACCESS_TOKEN="$(secret.AccessToken)"
         export APIGEE_ORGANIZATION="nhsd-$(APIGEE_ORGANIZATION)"
-        export APIGEE_APP_ID=${{ parameters.app_id }}
+        export APIGEE_APP_ID="$APP_ID"
         export STATUS_ENDPOINT_API_KEY="$(status-endpoint-api-key)"
-        make -C e2e ${{ parameters.test_type }}
+        make -C e2e "$TEST_TYPE"
+      env: 
+        TEST_TYPE: ${{ parameters.test_type }}
+        APP_ID: ${{ parameters.app_id }}
 
       workingDirectory: $(SERVICE_DIR)
       displayName: 'Run ${{ parameters.test_type }} Tests'

@@ -13,6 +13,46 @@ from docopt import docopt
 from jsonpath_rw import parse
 
 
+def get_example_or_default(value, path, property_name):
+    if "example" not in value and "default" not in value:
+        property_path = ".".join(path)
+        raise RuntimeError(f"{property_path}.{property_name} has no example or default!")
+    return value.get("example", value.get("default"))
+
+
+def handle_array(property_value, path, property_name):
+    items = property_value.get("items", {})
+
+    if "oneOf" in items:
+        return [
+            generate_resource_example(t["properties"], path + [property_name])
+            for t in items["oneOf"]
+        ]
+
+    if "anyOf" in items:
+        return [
+            generate_resource_example(t["properties"], path + [property_name])
+            for t in items["anyOf"]
+        ]
+
+    if items.get("type") == "object":
+        return [
+            generate_resource_example(items["properties"], path + [property_name])
+        ]
+
+    if {"example", "default"} & items.keys():
+        return [items.get("example", items.get("default"))]
+
+    return get_example_or_default(property_value, path, property_name)
+
+
+def handle_object(property_value, path, property_name):
+    return generate_resource_example(
+        property_value["properties"], path + [property_name]
+    )
+
+
+
 def generate_resource_example(schema_dict, path=None):
     """
     Generates resource examples from an OAS schema
@@ -26,60 +66,27 @@ def generate_resource_example(schema_dict, path=None):
         path = []
 
     for property_name, property_value in schema_dict.items():
-        if property_value["type"] == "array":
-            if "oneOf" in property_value["items"]:
-                example[property_name] = [
-                    generate_resource_example(t["properties"], path + [property_name])
-                    for t in property_value["items"]["oneOf"]
-                ]
-            elif "anyOf" in property_value["items"]:
-                example[property_name] = [
-                    generate_resource_example(t["properties"], path + [property_name])
-                    for t in property_value["items"]["anyOf"]
-                ]
-            elif property_value["items"]["type"] == "object":
-                example[property_name] = [
-                    generate_resource_example(
-                        property_value["items"]["properties"], path + [property_name]
-                    )
-                ]
-            else:
-                if {"example", "default"} & set(property_value.get("items", {}).keys()):
-                    items = property_value["items"]
-                    example[property_name] = [
-                        items.get("example", items.get("default"))
-                    ]
-                elif ("example" not in property_value) and (
-                    "default" not in property_value
-                ):
-                    property_path = ".".join(path)
-                    raise RuntimeError(
-                        f"{property_path}.{property_name} has no example or default!"
-                    )
-                else:
-                    example[property_name] = property_value.get(
-                        "example", property_value.get("default")
-                    )
-        elif property_value["type"] == "object":
-            example[property_name] = generate_resource_example(
-                property_value["properties"], path + [property_name]
+        prop_type = property_value.get("type")
+
+        if prop_type == "array":
+            example[property_name] = handle_array(property_value, path, property_name)
+
+        elif prop_type == "object":
+            example[property_name] = handle_object(
+                property_value, path, property_name
             )
+
         else:
-            if ("example" not in property_value) and ("default" not in property_value):
-                property_path = ".".join(path)
-                raise RuntimeError(
-                    f"{property_path}.{property_name} has no example or default!"
-                )
-            example[property_name] = property_value.get(
-                "example", property_value.get("default")
+            example[property_name] = get_example_or_default(
+                property_value, path, property_name
             )
 
     return example
 
 
+
 def main(arguments):
     """Program entry point"""
-    arguments = docopt(__doc__, version="0")
 
     # Load spec from file
     with open(arguments["SPEC_FILE"], "r") as spec_file:
