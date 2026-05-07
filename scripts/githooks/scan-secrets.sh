@@ -102,7 +102,7 @@ function run-gitleaks-in-docker() {
 # ==============================================================================
 
 function is-arg-true() {
-  local arg = "$1"
+  local arg="$1"
 
   if [[ "$arg" =~ ^(true|yes|y|on|1|TRUE|YES|Y|ON)$ ]]; then
     return 0

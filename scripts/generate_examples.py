@@ -87,7 +87,6 @@ def generate_resource_example(schema_dict, path=None):
 
 def main(arguments):
     """Program entry point"""
-    # arguments = docopt(__doc__, version="0")
 
     # Load spec from file
     with open(arguments["SPEC_FILE"], "r") as spec_file:
